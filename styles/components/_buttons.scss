@@ -15,7 +15,7 @@ button:not(.btn) {
   --btn-margin-y: #{$space-md};
   --btn-font-size: 2rem;
   --btn-border-radius: #{$border-radius};
-  --btn-min-width: 25rem;
+  --btn-max-width: 25rem;
   --btn-scale: 1;
 
   cursor: pointer;
@@ -28,7 +28,8 @@ button:not(.btn) {
   border-width: var(--btn-border-width);
   border-style: solid;
   border-radius: var(--btn-border-radius);
-  min-width: var(--btn-min-width);
+  max-width: var(--btn-max-width);
+  width: 100%;
   transform: scale(var(--btn-scale));
   transition: background-color 200ms ease-in-out, color 200ms ease-in-out,
     border-width 200ms ease-in-out, transform 200ms ease-in-out,
@@ -49,7 +50,7 @@ button:not(.btn) {
 
   // * Button Variations* //
 
-  &__no-bg {
+  &--no-bg {
     --btn-color: var(--text-color);
     --btn-bg: var(--bg-color);
 
@@ -59,7 +60,7 @@ button:not(.btn) {
     }
   }
 
-  &__block {
-    --btn-min-width: 100%;
+  &--block {
+    --btn-max-width: 100%;
   }
 }

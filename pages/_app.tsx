@@ -3,7 +3,7 @@ import { SwitchTransition, CSSTransition } from 'react-transition-group'
 import Head from 'next/head'
 import { Nav } from '../components/Nav'
 
-function MyApp({ Component, pageProps, router }) {
+const MyApp = ({ Component, pageProps, router }): JSX.Element => {
   return (
     <>
       <Head>

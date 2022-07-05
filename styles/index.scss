@@ -7,24 +7,14 @@
 @import './base/images';
 @import './base/typography';
 
-@import './utils/border';
-@import './utils/colors';
-@import './utils/container';
-@import './utils/display';
-@import './utils/flex';
-@import './utils/misc';
-@import './utils/positioning';
-@import './utils/shapes';
-@import './utils/spacing';
-@import './utils/text';
-@import './utils/width';
-@import './utils/z-index';
+@import './utils/';
 
 // ----------new component---------
 @import './components/inputs';
 @import './components/buttons';
 @import './components/cards';
 @import './components/links';
+@import './components/nav';
 
 @import './themes/transitions.scss';
 @import './themes/main.scss';

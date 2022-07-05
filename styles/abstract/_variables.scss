@@ -28,10 +28,10 @@ $header-font-modifiers: (
 );
 
 $font-base-sizes: (
-  sm: 1.5rem,
-  md: 1.6rem,
-  lg: 1.8rem,
-  xl: 2rem
+  sm: 1.4rem,
+  md: 1.5rem,
+  lg: 1.6rem,
+  xl: 1.8rem
 );
 
 $font-alt-sizes: (
@@ -106,7 +106,9 @@ $allDirections: ('left', 'right', 'top', 'bottom');
 
 $container-width: 1320px;
 $container-width-large: 1520px;
-$container-padding: $space-md;
+$container-padding-small: $space-sm;
+$container-padding-medium: $space-md;
+$container-padding-large: $space-xl;
 
 // **************************************************
 // ******************** colors **********************

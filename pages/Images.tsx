@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Images = () => {
+const Images = (): JSX.Element => {
   return <div>images</div>
 }
 

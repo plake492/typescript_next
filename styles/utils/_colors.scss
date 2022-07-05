@@ -16,12 +16,6 @@
 // ************ Generate Color Bg Map  ************* //
 
 // ************ Generate Root color vars ************ //
-:root {
-  @each $key, $value in $target-colors {
-    @include generate-color-var($key, $value);
-  }
-}
-
 /* Set default root colors*/
 :root {
   --bg-color: #{$bg-primary};
@@ -58,16 +52,6 @@
 $bg-comp-outputs: ('bg-1', 'bg-2');
 $bg-comp-primary: 100;
 $bg-comp-length-calc: length($bg-comp-outputs);
-
-:root {
-  @each $class in $bg-comp-outputs {
-    $i: index($bg-comp-outputs, $class);
-    $h-value: if($bg-comp-primary==0, 360, $bg-comp-primary) / ($i);
-    $hsl: hsl($h-value, 100, 50);
-
-    --comp-#{$class}: #{$hsl};
-  }
-}
 
 @each $class in $bg-comp-outputs {
   $i: index($bg-comp-outputs, $class);
@@ -108,14 +92,6 @@ $bg-mono-brightness-scale: (
     $bg-mono-brightness-starting + ($bg-mono-brightness-scale * ($i - 1))
   );
   @return hsl($bg-mono-primary, $sat-value, $bright-value);
-}
-:root {
-  @each $class in $bg-mono-outputs {
-    $i: index($bg-mono-outputs, $class);
-    $hsl: generate-monochromatic-hsl($i);
-
-    --mono-#{$class}: #{$hsl};
-  }
 }
 
 @each $class in $bg-mono-outputs {
@@ -166,18 +142,6 @@ $starting-point: $bg-analg-color-scale * $bg-analg-class-length;
   );
 }
 
-:root {
-  @each $class in $bg-analg-class-outputs {
-    $value: generate-analgous-hsl($class);
-
-    --analg-#{$class}: #{$value};
-    // // Add tones of created colors
-    // @each $tone in $tones {
-    //   --analg-#{$class}-#{$tone}: #{get-color-scale-value($value, $tone)};
-    // }
-  }
-}
-
 @each $class in $bg-analg-class-outputs {
   $value: generate-analgous-hsl($class);
   $text-color: get-contrasted-text($value);
@@ -200,5 +164,36 @@ $starting-point: $bg-analg-color-scale * $bg-analg-class-length;
       --text-color: #{$text-color-tone};
       @include bg-classes();
     }
+  }
+}
+
+:root {
+  @each $key, $value in $target-colors {
+    @include generate-color-var($key, $value);
+  }
+
+  @each $class in $bg-comp-outputs {
+    $i: index($bg-comp-outputs, $class);
+    $h-value: if($bg-comp-primary==0, 360, $bg-comp-primary) / ($i);
+    $hsl: hsl($h-value, 100, 50);
+
+    --comp-#{$class}: #{$hsl};
+  }
+
+  @each $class in $bg-mono-outputs {
+    $i: index($bg-mono-outputs, $class);
+    $hsl: generate-monochromatic-hsl($i);
+
+    --mono-#{$class}: #{$hsl};
+  }
+
+  @each $class in $bg-analg-class-outputs {
+    $value: generate-analgous-hsl($class);
+
+    --analg-#{$class}: #{$value};
+    // // Add tones of created colors
+    // @each $tone in $tones {
+    //   --analg-#{$class}-#{$tone}: #{get-color-scale-value($value, $tone)};
+    // }
   }
 }

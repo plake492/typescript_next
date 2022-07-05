@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getColorVars } from '../utils/helpers'
 
-const Colors = () => {
+const Colors = (): JSX.Element => {
   const [colors, setColors] = useState(null)
   const [analgColors, setAnalagColors] = useState(null)
   const [monoColors, setMonoColors] = useState(null)
