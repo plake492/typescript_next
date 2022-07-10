@@ -6,7 +6,7 @@ import { useGetRoutes } from '../hooks/useGetRoutes'
 import { useBemify } from '../hooks/useBemify'
 import { Routes } from '../utils/types'
 
-export const Nav = (): JSX.Element => {
+export const Nav: React.FC = (): JSX.Element => {
   const [showDropdwon, setShowDropdown] = useState(false)
   const bem = useBemify('nav')
   const { pathname } = useRouter()

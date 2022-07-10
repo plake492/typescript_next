@@ -203,6 +203,15 @@ $displays: (block, inline, inline-block, flex, inline-flex, none);
 /* Flexbox */
 /**************************************************/
 
+$flex-basis: (
+  25: 25%,
+  33: 33%,
+  50: 50%,
+  66: 66%,
+  75: 75%,
+  100: 100%
+);
+
 $placements: (
   center: center,
   start: start,
@@ -270,6 +279,9 @@ $flex: (
   ),
   gap: (
     flex-gap: $spacers
+  ),
+  flex-basis: (
+    flex-basis: $flex-basis
   )
 );
 

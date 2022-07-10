@@ -9,18 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "image-size": "^1.0.1",
     "next": "12.1.6",
+    "photoswipe": "^5.2.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-transition-group": "^4.4.2"
+    "react-transition-group": "^4.4.2",
+    "sharp": "^0.30.7"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.14",
-    "@zeit/next-css": "^1.0.1",
     "eslint": "8.18.0",
     "eslint-config-next": "12.1.6",
-    "next-purgecss": "^4.0.0",
+    "next-compose-plugins": "^2.2.1",
+    "next-optimized-images": "^2.6.2",
     "reset-css": "^5.0.1",
     "sass": "^1.52.3",
     "typescript": "^4.7.4"

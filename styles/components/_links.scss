@@ -1,4 +1,3 @@
-a,
 .link {
   --line-height: 1px;
   --line-width: 100%;
@@ -7,6 +6,7 @@ a,
   text-decoration: none;
   position: relative;
   transition: text-shadow 200ms ease-in-out;
+  cursor: pointer;
 
   &.nav-link:not(.link__active) {
     --line-width: 0%;

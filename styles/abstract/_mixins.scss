@@ -83,10 +83,20 @@
 //  * @param {SASS Map} must be a sass map containing key value pairs
 //  * @param {text} the css property to effect
 //  */
-@mixin class-with-responsive-key-and-val($map, $class, $property) {
+@mixin class-with-responsive-key-and-val(
+  $map,
+  $class,
+  $property,
+  $calc-value: null,
+  $var-name: null
+) {
   @each $key, $val in $map {
     .#{$class}-#{$key} {
-      #{$property}: $val;
+      @if $calc-value and $var-name {
+        #{$property}: calc($val - var($var-name));
+      } @else {
+        #{$property}: $val;
+      }
     }
     @each $bp, $px in $breakpoints {
       @include respond-to(#{$px}) {

@@ -3,7 +3,7 @@
 }
 .transitions__page-enter-active {
   opacity: 1;
-  transition: opacity 200ms ease-in-out;
+  transition: opacity 500ms ease-in-out;
 }
 .transitions__page-exit {
   opacity: 1;
@@ -11,5 +11,5 @@
 
 .transitions__page-exit-active {
   opacity: 0;
-  transition: opacity 200ms ease-in-out;
+  transition: opacity 500ms ease-in-out;
 }
