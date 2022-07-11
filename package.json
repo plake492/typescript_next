@@ -18,11 +18,10 @@
   "devDependencies": {
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.14",
+    "@types/react-transition-group": "^4.4.5",
     "@types/sharp": "^0.30.4",
     "eslint": "8.18.0",
     "eslint-config-next": "12.1.6",
-    "next-compose-plugins": "^2.2.1",
-    "next-optimized-images": "^2.6.2",
     "reset-css": "^5.0.1",
     "sass": "^1.52.3",
     "sharp": "^0.30.7",
