@@ -12,4 +12,12 @@ export interface ImageWithData {
   width: number
   height: number
   isLandscape: boolean
+  imgBase64: string
+}
+
+export interface APIData {
+  api: string
+  method?: string
+  body?: any
+  external?: boolean
 }

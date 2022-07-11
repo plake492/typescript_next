@@ -37,6 +37,7 @@ const Images: React.FC = (): JSX.Element => {
         method: 'POST',
         body: currentGallery
       })
+      console.log('images==>>', images)
       setImages(images)
       setShowImg(true) // Turn images back on
 
@@ -74,10 +75,6 @@ const Images: React.FC = (): JSX.Element => {
             (gallery: string, index: number): JSX.Element => (
               <a
                 key={gallery + index}
-                //! Remove Before Push
-                style={
-                  gallery === 'xxx' ? { opacity: 0, marginLeft: '20rem' } : {}
-                }
                 className={`link nav-link ${conditionalClasses([
                   currentGallery === gallery,
                   'link__active'
@@ -126,7 +123,7 @@ const Images: React.FC = (): JSX.Element => {
                     images &&
                     images.map(
                       (
-                        { src, width, height }: ImageWithData,
+                        { src, width, height, imgBase64 }: ImageWithData,
                         index: number
                       ): JSX.Element => (
                         <div
@@ -144,6 +141,7 @@ const Images: React.FC = (): JSX.Element => {
                               width={width}
                               height={height}
                               src={currentGallery + '/' + src}
+                              imgBase64={imgBase64}
                             />
                           </a>
                         </div>

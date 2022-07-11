@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getDir, getImgSizes } from './utils'
+import { getDir, processImage } from './utils'
 import { ImageWithData } from '../../utils/types'
 
 const excluded: string[] = ['.DS_Store']
@@ -13,15 +13,13 @@ export default async function handler(
 
   const imagesFiltered = files.filter(file => !excluded.includes(file))
 
-  const imagesWithData: ImageWithData[] = imagesFiltered.map(
-    (file: string): ImageWithData => {
-      const { width, height }: { width: number; height: number } = getImgSizes(
-        `${dir}/${file}`
-      )
+  const imagesWithData: ImageWithData[] = await Promise.all(
+    imagesFiltered.map(async (file: string): Promise<ImageWithData> => {
+      const { imgBase64, width, height } = await processImage(`${dir}/${file}`)
 
       const isLandscape = width > height
-      return { src: file, width, height, isLandscape }
-    }
+      return { src: file, width, height, isLandscape, imgBase64 }
+    })
   )
 
   res.status(200).json(imagesWithData)

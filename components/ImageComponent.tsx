@@ -10,6 +10,7 @@ interface ImageComponent {
   alt?: string
   staticImg?: boolean
   priority?: boolean
+  imgBase64?: string
 }
 
 export const ImageComponent: React.FC<ImageComponent> = ({
@@ -18,6 +19,7 @@ export const ImageComponent: React.FC<ImageComponent> = ({
   src,
   isLandscape = true,
   alt = '',
+  imgBase64,
   staticImg = true,
   priority = false
 }: ImageComponent): JSX.Element => {
@@ -38,6 +40,8 @@ export const ImageComponent: React.FC<ImageComponent> = ({
       alt={alt}
       layout="responsive"
       priority={priority}
+      placeholder={imgBase64 ? 'blur' : 'empty'}
+      blurDataURL={imgBase64 || ''}
     />
   )
 }

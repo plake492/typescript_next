@@ -1,16 +1,11 @@
-interface API {
-  api: string
-  method?: string
-  body?: any
-  external?: boolean
-}
+import { APIData } from './types'
 
 export const API = async <T>({
   api,
   method = 'GET',
   body,
   external
-}: API): Promise<T> =>
+}: APIData): Promise<T> =>
   await fetch(!external ? `/api/${api}` : api, {
     method,
     body
