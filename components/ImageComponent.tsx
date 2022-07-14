@@ -39,18 +39,15 @@ export const ImageComponent: React.FC<ImageComponent> = ({
   }, [width, height, isLandscape])
 
   return (
-    <div className="shader">
-      <Image
-        src={staticImg ? `/images/${src}` : src}
-        width={calculatedWidth}
-        height={calculatedHeight}
-        alt={alt}
-        layout="responsive"
-        priority={priority}
-        placeholder={imgBase64 ? 'blur' : 'empty'}
-        blurDataURL={imgBase64 || ''}
-      />
-      {shader && shader}
-    </div>
+    <Image
+      src={staticImg ? `/images/${src}` : src}
+      width={calculatedWidth}
+      height={calculatedHeight}
+      alt={alt}
+      layout="responsive"
+      priority={priority}
+      placeholder={imgBase64 ? 'blur' : 'empty'}
+      blurDataURL={imgBase64 || ''}
+    />
   )
 }

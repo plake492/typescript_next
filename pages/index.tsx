@@ -1,14 +1,13 @@
 import { useState, useRef } from 'react'
 import Head from 'next/head'
-
 import { useResizeObserver } from '../hooks/useResizeObserver'
-import { conditionalClasses } from '../utils/helpers'
+import { Card } from '../components/Card'
 
 export default function Home() {
   const inputRef = useRef()
   const [input, setInput] = useState('')
 
-  const { width, height } = useResizeObserver(inputRef, ['padding', 'margin'])
+  const { width, height } = useResizeObserver(inputRef, ['padding'])
 
   return (
     <div className="container py-xxxl">
@@ -19,8 +18,8 @@ export default function Home() {
       </Head>
 
       <div className="d-flex flex-col flex-md-row justify-content-between flex-gap-md">
-        <div className="card bg-midnight p-xl flex-1">
-          <p className="small">
+        <div className="bg-midnight p-xl flex-1">
+          <p className="text-xs">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed
             voluptate, minima quo maiores quasi, repellendus, voluptas odio
             nulla perferendis harum officiis! Eligendi recusandae voluptas, vero
@@ -32,8 +31,8 @@ export default function Home() {
           </div>
           <button className="mt-xl btn  d-block">Click Here</button>
         </div>
-        <div className="card bg-midnight p-xl flex-1">
-          <p className="small">
+        <div className="bg-midnight p-xl flex-1">
+          <p className="text-xs">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed
             voluptate, minima quo maiores quasi, repellendus, voluptas odio
             nulla perferendis harum officiis! Eligendi recusandae voluptas, vero
@@ -51,7 +50,6 @@ export default function Home() {
         </div>
       </div>
       <div
-        className="card bg-midnight p-xl my-xxxl"
         ref={inputRef}
         style={
           {
@@ -59,18 +57,28 @@ export default function Home() {
             '--card-width': width + 'px'
           } as React.CSSProperties
         }
+        className="my-xl"
       >
-        <div className="card__header"></div>
-        <h5 className={conditionalClasses([true, 'blue', true])}>
-          width: {width} | height: {height}
-        </h5>
-
-        <p className="small pt-xl">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed
-          voluptate, minima quo maiores quasi, repellendus, voluptas odio nulla
-          perferendis harum officiis! Eligendi recusandae voluptas, vero sit
-          eveniet aliquid dolores nihil.
-        </p>
+        <Card
+          block
+          noBorder
+          header={<h5>Observe element size change</h5>}
+          content={
+            <>
+              <p className="py-xl">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed
+                voluptate, minima quo maiores quasi, repellendus, voluptas odio
+                nulla perferendis harum officiis! Eligendi recusandae voluptas,
+                vero sit eveniet aliquid dolores nihil.
+              </p>
+            </>
+          }
+          footer={
+            <p>
+              width: {width} | height: {height}
+            </p>
+          }
+        />
       </div>
     </div>
   )
