@@ -7,7 +7,9 @@ const bemify =
   (block: string): Function =>
   (element: string | undefined, ...classes: (string | boolean)[]) => {
     // We combine the block and element or return the block itself
-    const combined: string = element ? `${block}__${element}` : block
+    const combined: string = element
+      ? `${block}${element?.startsWith('--') ? '' : '__'}${element}`
+      : block
 
     const formedClasses: string[] =
       classes && classes.length
@@ -21,9 +23,6 @@ const bemify =
 
               // Ensure that classname is always a string
               if (!isStr(className)) className = ''
-
-              // Finally Check for a modifier class
-              if (className?.startsWith('--')) className = combined + className
 
               return className
             })

@@ -17,6 +17,8 @@ $breakpoints: (
 
 $primary-font: Verdana, sans-serif;
 
+$font-weights: (100, 200, 300, 400, 500, 600, 700, 800, 900);
+
 // Responsive ***************************************
 
 $header-font-modifiers: (
@@ -27,6 +29,13 @@ $header-font-modifiers: (
   xl: 0.888
 );
 
+$font-sm-sizes: (
+  sm: 1.2rem,
+  md: 1.3rem,
+  lg: 1.4rem,
+  xl: 1.6rem
+);
+
 $font-base-sizes: (
   sm: 1.4rem,
   md: 1.5rem,
@@ -34,7 +43,7 @@ $font-base-sizes: (
   xl: 1.8rem
 );
 
-$font-alt-sizes: (
+$font-lg-sizes: (
   sm: 1.6rem,
   md: 1.8rem,
   lg: 2rem,
@@ -167,8 +176,10 @@ $transition-list: (
 $border-radius: 4px;
 $border-radius-pill: 40px;
 $border-radius-round: 50%;
+$border-width: 1px;
+$border-color: $rock;
 
-$border: $rock 1px solid;
+$border: $border-color $border-width solid;
 
 $box-shadow: 2px 2px 7px 2px rgb(0 0 0 / 8%);
 

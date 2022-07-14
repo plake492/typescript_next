@@ -6,6 +6,7 @@ import { SwitchTransition, CSSTransition } from 'react-transition-group'
 // @ts-ignore
 import PhotoSwipeLightbox from 'photoswipe/lightbox'
 import 'photoswipe/style.css'
+import { Shader } from '../components/Shader'
 
 import { API } from '../utils/api'
 
@@ -37,7 +38,7 @@ const Images: React.FC = (): JSX.Element => {
         method: 'POST',
         body: currentGallery
       })
-      console.log('images==>>', images)
+
       setImages(images)
       setShowImg(true) // Turn images back on
 

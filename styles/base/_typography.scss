@@ -8,7 +8,9 @@
     $font-size-min
   );
 
-  @include make-responsive-var(--text-alt-size, $font-alt-sizes, 1.5rem);
+  @include make-responsive-var(--text-sm-size, $font-sm-sizes, 1.2rem);
+
+  @include make-responsive-var(--text-lg-size, $font-lg-sizes, 1.5rem);
 
   // Set Responsive header values
   @include make-responsive-var(
@@ -17,10 +19,15 @@
     0.5
   );
 
-  --text-sm: min(#{calc(var(--text-base-size) * 0.888)}, #{$font-size-min});
+  --text-xs-size: min(
+    #{calc(var(--text-base-size) * 0.888)},
+    #{$font-size-min}
+  );
   --line-height-ratio: #{$line-height-ratio};
   --line-height-ratio-headers: #{$line-height-ratio-headers};
   --text-color: #{$text-main};
+  --base-font-weight: 300;
+  --base-line-height: calc(var(--text-base-size) * var(--line-height-ratio));
 }
 
 * {
@@ -36,37 +43,36 @@ body {
   font-family: $primary-font;
   font-size: var(--text-base-size);
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--base-font-weight);
   letter-spacing: 0.08rem;
-  line-height: calc(var(--text-base-size) * var(--line-height-ratio));
+  line-height: var(--base-line-height);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 p,
-.p-1 {
-  line-height: calc(var(--text-base-size) * var(--line-height-ratio));
+.text,
+.text-md {
+  line-height: var(--base-line-height);
   font-size: var(--text-base-size);
   font-weight: 300;
   color: var(--text-color);
-  // margin-bottom: var(--space-md);
 }
 
-.p-2 {
-  // margin-bottom: var(--space-md);
-  line-height: calc(var(--text-alt-size) * var(--line-height-ratio));
-  font-size: var(--text-alt-size);
-  font-weight: 300;
-  color: var(--text-color);
+.text-lg {
+  --text-base-size: var(--text-lg-size);
+  --base-line-height: calc(var(--text-base-size) * var(--line-height-ratio));
+}
+
+.text-sm {
+  --text-base-size: var(--text-sm-size);
+  --base-line-height: calc(var(--text-base-size) * var(--line-height-ratio));
 }
 
 small,
-.small {
-  font-size: var(--text-sm);
-  line-height: calc(var(--text-sm) * var(--line-height-ratio));
-  font-weight: 300;
-  // margin-bottom: var(--space-md);
-  color: var(--text-color);
+.text-xs {
+  --text-base-size: var(--text-xs-size);
+  --base-line-height: calc(var(--text-base-size) * var(--line-height-ratio));
 }
 
 // Generate Header fonts and line heights
@@ -85,7 +91,6 @@ small,
     line-height: $line-height;
     font-weight: 300;
     color: var(--text-color);
-    // margin-bottom: var(--space-md);
   }
 }
 

@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react'
 import { getColorVars } from '../utils/helpers'
+import { Shader } from '../components/Shader'
+import { ImageComponent } from '../components/ImageComponent'
 
 const Colors = (): JSX.Element => {
   const [colors, setColors] = useState(null)
   const [analgColors, setAnalagColors] = useState(null)
   const [monoColors, setMonoColors] = useState(null)
   const [compColors, setCompolors] = useState(null)
+
+  const [specularBlend, setSpecularBlend] = useState(null)
+  const [maskBlend, setMaskBelnd] = useState(null)
 
   useEffect(() => {
     const cssVarTarget = '--bg-'
@@ -25,8 +30,62 @@ const Colors = (): JSX.Element => {
     setCompolors(compColorVars)
   }, [])
 
+  const options = [
+    'normal',
+    'multiply',
+    'screen',
+    'overlay',
+    'darken',
+    'lighten',
+    'color-dodge',
+    'color-burn',
+    'hard-light',
+    'soft-light',
+    'difference',
+    'exclusion',
+    'hue',
+    'saturation',
+    'color',
+    'luminosity'
+  ]
+
   return (
     <>
+      <div className="container py-xxxl">
+        <h3>Shader</h3>
+        <div>
+          <label>Specular Blend</label>
+          <select onChange={e => setSpecularBlend(e.target.value)}>
+            {options.map((option, index) => (
+              <option key={option + index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label>Mask Blend</label>
+          <select onChange={e => setMaskBelnd(e.target.value)}>
+            {options.map((option, index) => (
+              <option key={option + index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <Shader
+        img="abstract/jr-korpa-9XngoIpxcEo-unsplash.jpg"
+        specularBlend={specularBlend}
+        maskBlend={maskBlend}
+      >
+        <ImageComponent
+          width={1000}
+          src={'abstract/jr-korpa-9XngoIpxcEo-unsplash.jpg'}
+          priority
+        />
+      </Shader>
       <div className="container py-xxxl">
         <div className="pb-xl mb-xl border-bottom">
           <h3>Colors</h3>
@@ -38,7 +97,7 @@ const Colors = (): JSX.Element => {
               className={`${color.replace(
                 '--',
                 ''
-              )} card w-min-100 py-md px-md`}
+              )} card mb-none w-min-100 py-md px-md`}
             >
               <p className="small">Lorem ipsum dolor sit amet,</p>
             </div>
