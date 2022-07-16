@@ -1,3 +1,4 @@
+import path from 'path'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getDir, processImage } from './utils'
 import { ImageWithData } from '../../utils/types'
@@ -8,7 +9,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ImageWithData[]>
 ) {
-  const dir = './public/images/' + req.body
+  const dir = path.resolve('./public', 'images/' + req.body)
   const files: string[] = await getDir(dir)
 
   const imagesFiltered = files.filter(file => !excluded.includes(file))

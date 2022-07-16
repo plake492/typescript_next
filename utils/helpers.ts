@@ -32,7 +32,9 @@ export const getColorVars = ({ cssVarTarget }) => {
 
 /**
  *
- * @param rules Accepts Arrays containing a boolean condition at index[0], followed by a string value at index[1], and an optional fallback string value at index[2]
+ * @param rules Accepts Arrays containing a boolean condition at index[0],
+ *              followed by a string value at index[1],
+ *              and an optional fallback string value at index[2]
  * @returns String of values seperated by a space
  */
 export const conditionalClasses = (
