@@ -1,3 +1,5 @@
+import { urlFor } from '../lib/sanity'
+
 export const getColorVars = ({ cssVarTarget }) => {
   type cssObj = {
     [key: string]: any
@@ -51,3 +53,14 @@ export const conditionalClasses = (
       ]): string => (condition ? style : fallback || '')
     )
     .join(' ')
+
+export const getImgSize = photo => {
+  const photoObj = urlFor(photo)
+  const w = parseInt(
+    photoObj.options.source.asset._ref.split('-')[2].split('x')[0]
+  )
+  const h = parseInt(
+    photoObj.options.source.asset._ref.split('-')[2].split('x')[1]
+  )
+  return [w, h]
+}

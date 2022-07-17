@@ -1,6 +1,6 @@
 import '../styles/index.scss'
-import { SwitchTransition, CSSTransition } from 'react-transition-group'
 import Head from 'next/head'
+import { SwitchTransition, CSSTransition } from 'react-transition-group'
 import { Nav } from '../components/Nav'
 
 const MyApp = ({ Component, pageProps, router }): JSX.Element => {

@@ -2,15 +2,21 @@ import React, { Dispatch, SetStateAction, useState, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { conditionalClasses } from '../utils/helpers'
-import { useGetRoutes } from '../hooks/useGetRoutes'
 import { useBemify } from '../hooks/useBemify'
 import { Routes } from '../utils/types'
 
 export const Nav: React.FC = (): JSX.Element => {
+  const routes: Routes[] = [
+    { path: '/Cards', title: 'Cards' },
+    { path: '/Colors', title: 'Colors' },
+    { path: '/Images', title: 'Images' },
+    { path: '/Inputs', title: 'Inputs' },
+    { path: '/Typography', title: 'Typography' }
+  ]
+
   const [showDropdwon, setShowDropdown] = useState(false)
   const bem = useBemify('nav')
   const { pathname } = useRouter()
-  const { routes } = useGetRoutes()
 
   return (
     <nav className={bem()}>
