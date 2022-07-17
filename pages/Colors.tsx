@@ -49,6 +49,8 @@ const Colors = (): JSX.Element => {
     'luminosity'
   ]
 
+  const img = 'landscape/mert-atakan-chc-oAL0gBU-unsplash.jpg'
+
   return (
     <>
       <div className="container py-xxxl">
@@ -75,17 +77,17 @@ const Colors = (): JSX.Element => {
           </select>
         </div>
       </div>
-      <Shader
-        img="abstract/jr-korpa-9XngoIpxcEo-unsplash.jpg"
-        specularBlend={specularBlend}
-        maskBlend={maskBlend}
-      >
-        <ImageComponent
-          width={1000}
-          src={'abstract/jr-korpa-9XngoIpxcEo-unsplash.jpg'}
-          priority
-        />
-      </Shader>
+      <div className="container">
+        <Shader img={img} specularBlend={specularBlend} maskBlend={maskBlend}>
+          <ImageComponent
+            width={1200}
+            height={795}
+            src={img}
+            priority
+            isStaticImage
+          />
+        </Shader>
+      </div>
       <div className="container py-xxxl">
         <div className="pb-xl mb-xl border-bottom">
           <h3>Colors</h3>

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState, useCallback, RefObject } from 'react'
+import { useEffect, useState, useCallback, RefObject } from 'react'
 
 interface SpacingMap {
   widthSpacing: number | undefined
@@ -102,7 +102,7 @@ export const useResizeObserver = (
     [callback, withSpacing]
   )
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!ref.current) return
 
     let RO = new ResizeObserver(entries => handleResize(entries))

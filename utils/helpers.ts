@@ -1,3 +1,10 @@
+import { urlFor } from '../lib/sanity'
+
+/**
+ * TODO WORK IN PROGRESS
+ * @param param0
+ * @returns Array of css variables
+ */
 export const getColorVars = ({ cssVarTarget }) => {
   type cssObj = {
     [key: string]: any
@@ -31,7 +38,7 @@ export const getColorVars = ({ cssVarTarget }) => {
 }
 
 /**
- *
+ * A helper function for generating classes bases on a boolean condition.
  * @param rules Accepts Arrays containing a boolean condition at index[0],
  *              followed by a string value at index[1],
  *              and an optional fallback string value at index[2]
@@ -51,3 +58,16 @@ export const conditionalClasses = (
       ]): string => (condition ? style : fallback || '')
     )
     .join(' ')
+
+/**
+ * A helper function to extract the exact width and height from an image
+ * @param photo Image Object from Sanity Studio
+ * @returns Array containing [width, height]
+ */
+export const getImgSize = (photo: {}): number[] => {
+  const photoObj: string = urlFor(photo).url()
+  const dimensions: string[] = photoObj.split('-')[1].split('.')[0].split('x')
+  const width: number = parseInt(dimensions[0])
+  const height: number = parseInt(dimensions[1])
+  return [width, height]
+}

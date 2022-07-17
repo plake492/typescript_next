@@ -9,7 +9,7 @@ const Cards = (): JSX.Element => {
   return (
     <div style={{ '--card-divider': 3 } as React.CSSProperties}>
       <div className="box-shadow angle-left-right ">
-        <ImageComponent width={1000} src={image} priority />
+        <ImageComponent isStaticImage width={1000} src={image} priority />
       </div>
       <div className="container py-xxl">
         <div className="d-flex flex-wrap flex-gap-xl justify-content-between">
@@ -18,6 +18,7 @@ const Cards = (): JSX.Element => {
             header={<div className="h5">Header</div>}
             image={
               <ImageComponent
+                isStaticImage
                 width={1}
                 src={'abstract/andre-benz-JBkwaYMuhdc-unsplash.jpg'}
               />
@@ -40,6 +41,7 @@ const Cards = (): JSX.Element => {
           <Card
             image={
               <ImageComponent
+                isStaticImage
                 width={1}
                 src={'abstract/efe-kurnaz-RnCPiXixooY-unsplash.jpg'}
               />
@@ -62,6 +64,7 @@ const Cards = (): JSX.Element => {
             header={<div>Header</div>}
             image={
               <ImageComponent
+                isStaticImage
                 width={1}
                 src={'landscape/ryan-schroeder-Gg7uKdHFb_c-unsplash.jpg'}
               />
@@ -85,6 +88,7 @@ const Cards = (): JSX.Element => {
             header={<div>Header</div>}
             image={
               <ImageComponent
+                isStaticImage
                 width={1}
                 src={'landscape/ryan-schroeder-Gg7uKdHFb_c-unsplash.jpg'}
               />
@@ -125,6 +129,7 @@ const Cards = (): JSX.Element => {
               header={<div>Header</div>}
               image={
                 <ImageComponent
+                  isStaticImage
                   width={1}
                   src={'landscape/ryan-schroeder-Gg7uKdHFb_c-unsplash.jpg'}
                 />
@@ -147,6 +152,7 @@ const Cards = (): JSX.Element => {
               header={<div>Header</div>}
               image={
                 <ImageComponent
+                  isStaticImage
                   width={1}
                   src={'landscape/karsten-wurth-7BjhtdogU3A-unsplash.jpg'}
                 />

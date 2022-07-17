@@ -1,67 +1,77 @@
 import React, { useEffect, useState } from 'react'
+import { GetStaticProps } from 'next'
+
 import { ImageComponent } from '../components/ImageComponent'
-import { conditionalClasses } from '../utils/helpers'
+import { conditionalClasses, getImgSize } from '../utils/helpers'
 import { ImageWithData } from '../utils/types'
 import { SwitchTransition, CSSTransition } from 'react-transition-group'
 // @ts-ignore
 import PhotoSwipeLightbox from 'photoswipe/lightbox'
 import 'photoswipe/style.css'
-import { Shader } from '../components/Shader'
 
+import { sanityClient, urlFor } from '../lib/sanity'
+import { tagsQuery, imagesQuery } from '../lib/queries'
+import { Shader } from '../components/Shader'
 import { API } from '../utils/api'
 
-const Images: React.FC = (): JSX.Element => {
-  const [images, setImages] = useState(undefined)
+const Images: React.FC = ({
+  images,
+  tags
+}: {
+  images: any
+  tags: any
+}): JSX.Element => {
+  // const [images, setImages] = useState(undefined)
   const [galleries, setGalleries] = useState(undefined)
   const [currentGallery, setCurrentGallery] = useState(undefined)
-  const [showImg, setShowImg] = useState(false)
-  const [numberOfCols, setNumberOfCols] = useState('4')
+  // const [showImg, setShowImg] = useState(false)
+  const [numberOfCols, setNumberOfCols] = useState('3')
 
-  useEffect(() => {
-    const fetchDirectories = async (): Promise<void> => {
-      const dirs: string[] = await API({
-        api: 'getImageDirs',
-        method: 'GET'
-      })
-      setGalleries(dirs)
-      setCurrentGallery(dirs[0])
-    }
-    fetchDirectories()
-  }, [])
+  // useEffect(() => {
+  //   const fetchDirectories = async (): Promise<void> => {
+  //     const dirs: string[] = await API({
+  //       api: 'getImageDirs',
+  //       method: 'GET'
+  //     })
+  //     setGalleries(dirs)
+  //     setCurrentGallery(dirs[0])
+  //   }
+  //   fetchDirectories()
+  // }, [])
 
-  useEffect(() => {
-    let lightbox: PhotoSwipeLightbox
+  // useEffect(() => {
+  //   let lightbox: PhotoSwipeLightbox
 
-    const fetchImages = async (): Promise<void> => {
-      const images: ImageWithData[] = await API({
-        api: 'getImages',
-        method: 'POST',
-        body: currentGallery
-      })
+  //   const fetchImages = async (): Promise<void> => {
+  //     const images: ImageWithData[] = await API({
+  //       api: 'getImages',
+  //       method: 'POST',
+  //       body: currentGallery
+  //     })
 
-      setImages(images)
-      setShowImg(true) // Turn images back on
+  //     setImages(images)
+  //     setShowImg(true) // Turn images back on
 
-      // Initialized LightBox
-      let lightbox: PhotoSwipeLightbox = new PhotoSwipeLightbox({
-        bgOpacity: 0.9,
-        gallery: '#' + currentGallery,
-        children: 'a',
-        pswpModule: () => import('photoswipe')
-      })
+  //     // Initialized LightBox
+  //     let lightbox: PhotoSwipeLightbox = new PhotoSwipeLightbox({
+  //       bgOpacity: 0.9,
+  //       gallery: '#' + currentGallery,
+  //       children: 'a',
+  //       pswpModule: () => import('photoswipe')
+  //     })
 
-      lightbox.init()
-    }
-    // Only run when gallery is selected
-    currentGallery && fetchImages()
+  //     lightbox.init()
+  //   }
+  //   // Only run when gallery is selected
+  //   currentGallery && fetchImages()
 
-    return () => {
-      if (lightbox) {
-        lightbox.destroy()
-        lightbox = null
-      }
-    }
-  }, [currentGallery])
+  //   return () => {
+  //     if (lightbox) {
+  //       lightbox.destroy()
+  //       lightbox = null
+  //     }
+  //   }
+  // }, [currentGallery])
 
   return (
     <>
@@ -69,24 +79,25 @@ const Images: React.FC = (): JSX.Element => {
         <ImageComponent
           width={1000}
           src={'abstract/jr-korpa-9XngoIpxcEo-unsplash.jpg'}
+          isStaticImage
           priority
         />
         <div className="bg-slate-grey px-xxxl py-xl d-flex flex-gap-xl">
-          {galleries?.map(
-            (gallery: string, index: number): JSX.Element => (
+          {tags?.map(
+            ({ name }: { name: string }, index: number): JSX.Element => (
               <a
-                key={gallery + index}
+                key={name + index}
                 className={`link nav-link ${conditionalClasses([
-                  currentGallery === gallery,
+                  name === name,
                   'link__active'
                 ])}`}
-                onClick={() => {
-                  // Remove Images to prevent src updating with wrong dir name
-                  setShowImg(false)
-                  setCurrentGallery(gallery)
-                }}
+                // onClick={() => {
+                //   // Remove Images to prevent src updating with wrong dir name
+                //   setShowImg(false)
+                //   setCurrentGallery(gallery)
+                // }}
               >
-                {gallery.toUpperCase()}
+                {name.toUpperCase()}
               </a>
             )
           )}
@@ -113,49 +124,80 @@ const Images: React.FC = (): JSX.Element => {
             className="mason-grid p-xxl pswp-gallery"
             style={{ '--number-of-cols': numberOfCols } as React.CSSProperties}
           >
-            <SwitchTransition mode="out-in">
+            {/* <SwitchTransition mode="out-in">
               <CSSTransition
                 key={currentGallery}
                 classNames="transitions__page"
                 timeout={500}
-              >
-                <>
-                  {showImg &&
-                    images &&
-                    images.map(
-                      (
-                        { src, width, height, imgBase64 }: ImageWithData,
-                        index: number
-                      ): JSX.Element => (
-                        <div
-                          key={currentGallery + '-' + index}
-                          className="border-rounded overflow-hidden"
-                        >
-                          <a
+              > */}
+            <>
+              {
+                // showImg &&
+                images &&
+                  // images.map(
+                  //   (
+                  //     { src, width, height, imgBase64 }: ImageWithData,
+                  //     index: number
+                  //   ): JSX.Element => (
+                  //     <div
+                  //       key={currentGallery + '-' + index}
+                  //       className="border-rounded overflow-hidden"
+                  //     >
+                  //       <a
+                  //         href={`/images/${currentGallery}/${src}`}
+                  //         data-pswp-width={width}
+                  //         data-pswp-height={height}
+                  //         target="_blank"
+                  //         rel="noreferrer"
+                  //       >
+                  //         <ImageComponent
+                  //           width={width}
+                  //           height={height}
+                  //           src={currentGallery + '/' + src}
+                  //           imgBase64={imgBase64}
+                  //         />
+                  //       </a>
+                  //     </div>
+                  //   )
+                  // )}
+                  images.map(({ picture }, index: number): JSX.Element => {
+                    const [width, height] = getImgSize(picture)
+                    return (
+                      <div
+                        key={currentGallery + '-' + index}
+                        className="border-rounded overflow-hidden"
+                      >
+                        {/* <a
                             href={`/images/${currentGallery}/${src}`}
                             data-pswp-width={width}
                             data-pswp-height={height}
                             target="_blank"
                             rel="noreferrer"
-                          >
-                            <ImageComponent
-                              width={width}
-                              height={height}
-                              src={currentGallery + '/' + src}
-                              imgBase64={imgBase64}
-                            />
-                          </a>
-                        </div>
-                      )
-                    )}
-                </>
-              </CSSTransition>
-            </SwitchTransition>
+                          > */}
+                        <ImageComponent
+                          width={width}
+                          height={height}
+                          src={urlFor(picture).url()}
+                        />
+                        {/* </a> */}
+                      </div>
+                    )
+                  })
+              }
+            </>
+            {/* </CSSTransition>
+            </SwitchTransition> */}
           </div>
         </section>
       </div>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const tags = await sanityClient.fetch<Promise<any>>(tagsQuery)
+  const images = await sanityClient.fetch<Promise<any>>(imagesQuery)
+  return { props: { images, tags } }
 }
 
 export default Images
