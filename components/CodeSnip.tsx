@@ -1,8 +1,10 @@
-export const CodeSnip: React.FC = ({
-  codeString
-}: {
+interface CodeString {
   codeString: string
-}): JSX.Element => (
+}
+
+export const CodeSnip: React.FC<CodeString> = ({
+  codeString
+}: CodeString): JSX.Element => (
   <code>
     {codeString.split(' ').map(
       (item, index, arr): JSX.Element => (
