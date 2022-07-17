@@ -197,7 +197,10 @@ const Images: React.FC = ({
 export const getStaticProps: GetStaticProps = async () => {
   const tags = await sanityClient.fetch<Promise<any>>(tagsQuery)
   const images = await sanityClient.fetch<Promise<any>>(imagesQuery)
-  return { props: { images, tags } }
+  return {
+    props: { images, tags },
+    revalidate: 10
+  }
 }
 
 export default Images
