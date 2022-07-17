@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { GetStaticProps } from 'next'
+
 import { ImageComponent } from '../components/ImageComponent'
 import { conditionalClasses, getImgSize } from '../utils/helpers'
 import { ImageWithData } from '../utils/types'
@@ -12,14 +14,18 @@ import { tagsQuery, imagesQuery } from '../lib/queries'
 import { Shader } from '../components/Shader'
 import { API } from '../utils/api'
 
-const Images: React.FC = ({ images, tags }): JSX.Element => {
+const Images: React.FC = ({
+  images,
+  tags
+}: {
+  images: any
+  tags: any
+}): JSX.Element => {
   // const [images, setImages] = useState(undefined)
   const [galleries, setGalleries] = useState(undefined)
   const [currentGallery, setCurrentGallery] = useState(undefined)
   // const [showImg, setShowImg] = useState(false)
   const [numberOfCols, setNumberOfCols] = useState('3')
-
-  console.log('tags==>>', tags)
 
   // useEffect(() => {
   //   const fetchDirectories = async (): Promise<void> => {
@@ -156,7 +162,6 @@ const Images: React.FC = ({ images, tags }): JSX.Element => {
                   // )}
                   images.map(({ picture }, index: number): JSX.Element => {
                     const [width, height] = getImgSize(picture)
-                    console.log('[width, height]==>>', [width, height])
                     return (
                       <div
                         key={currentGallery + '-' + index}
@@ -189,11 +194,9 @@ const Images: React.FC = ({ images, tags }): JSX.Element => {
   )
 }
 
-export async function getStaticProps() {
-  const tags = await sanityClient.fetch(tagsQuery)
-
-  const images = await sanityClient.fetch(imagesQuery)
-
+export const getStaticProps: GetStaticProps = async () => {
+  const tags = await sanityClient.fetch<Promise<any>>(tagsQuery)
+  const images = await sanityClient.fetch<Promise<any>>(imagesQuery)
   return { props: { images, tags } }
 }
 

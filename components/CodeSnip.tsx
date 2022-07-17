@@ -8,7 +8,11 @@ export const CodeSnip = ({
       (item, index, arr): JSX.Element => (
         <>
           <span key={item + index}>{item}</span>
-          {index !== arr.length - 1 && <span className="mx-md">|</span>}
+          {index !== arr.length - 1 && (
+            <span key={item + index} className="mx-md">
+              |
+            </span>
+          )}
         </>
       )
     )}
