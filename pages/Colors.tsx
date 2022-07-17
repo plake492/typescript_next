@@ -3,7 +3,7 @@ import { getColorVars } from '../utils/helpers'
 import { Shader } from '../components/Shader'
 import { ImageComponent } from '../components/ImageComponent'
 
-const Colors = (): JSX.Element => {
+const Colors: React.FC = (): JSX.Element => {
   const [colors, setColors] = useState(null)
   const [analgColors, setAnalagColors] = useState(null)
   const [monoColors, setMonoColors] = useState(null)

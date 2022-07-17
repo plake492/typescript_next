@@ -10,7 +10,7 @@ interface ImageComponent {
   alt?: string
   isStaticImage?: boolean
   priority?: boolean
-  imgBase64?: string
+  blur?: string
 }
 
 export const ImageComponent: React.FC<ImageComponent> = ({
@@ -19,15 +19,15 @@ export const ImageComponent: React.FC<ImageComponent> = ({
   src,
   isLandscape = true,
   alt = '',
-  imgBase64,
   isStaticImage,
-  priority
+  priority,
+  blur
 }: ImageComponent): JSX.Element => {
   const [calculatedHeight, setCalculatedHeight] = useState<number>(height || 0)
   const [calculatedWidth, setCalculatedWidth] = useState<number>(width || 0)
 
   useEffect((): void => {
-    if (isStaticImage) {
+    if (isStaticImage)
       if (!height)
         if (isLandscape) setCalculatedHeight((width * 9) / 16)
         else setCalculatedHeight((width * 16) / 9)
@@ -35,7 +35,6 @@ export const ImageComponent: React.FC<ImageComponent> = ({
         if (isLandscape) setCalculatedWidth((height * 9) / 16)
         else setCalculatedWidth((width * 16) / 9)
       else setCalculatedHeight(height)
-    }
   }, [width, height, isLandscape, isStaticImage])
 
   return (
@@ -46,8 +45,8 @@ export const ImageComponent: React.FC<ImageComponent> = ({
       alt={alt}
       layout="responsive"
       priority={priority}
-      placeholder={imgBase64 ? 'blur' : 'empty'}
-      blurDataURL={imgBase64 || ''}
+      placeholder={blur ? 'blur' : 'empty'}
+      blurDataURL={blur || ''}
     />
   )
 }

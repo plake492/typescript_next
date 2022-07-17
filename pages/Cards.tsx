@@ -3,7 +3,7 @@ import { Card } from '../components/Card'
 import { ImageComponent } from '../components/ImageComponent'
 import { Shader } from '../components/Shader'
 
-const Cards = (): JSX.Element => {
+const Cards: React.FC = (): JSX.Element => {
   const image = 'abstract/jr-korpa-moclBG0oPyQ-unsplash.jpg'
 
   return (

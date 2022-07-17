@@ -8,7 +8,7 @@ interface ShaderProps {
   maskBlend?: string
 }
 
-export const Shader = ({
+export const Shader: React.FC = ({
   children,
   img,
   specularBlend,

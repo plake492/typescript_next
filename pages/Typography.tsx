@@ -1,6 +1,6 @@
 import { CodeSnip } from '../components/CodeSnip'
 
-const Typography = (): JSX.Element => (
+const Typography: React.FC = (): JSX.Element => (
   <>
     <section className="bg-lake-80">
       <div className="container py-xxl ">

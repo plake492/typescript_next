@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 const validateInput = (value: string): boolean => !!value.length
 
-const Inputs = (): JSX.Element => {
+const Inputs: React.FC = (): JSX.Element => {
   const [text, setText] = useState('')
   const [textIsValid, setTextIsValid] = useState(false)
   const [textIsTouched, setTextIsTouched] = useState(false)

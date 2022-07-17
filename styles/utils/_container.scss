@@ -3,9 +3,6 @@
   --container-width-large: #{$container-width-large};
   --container-padding: #{$container-padding-small};
 
-  @include md-size() {
-    --container-padding: #{$container-padding-medium};
-  }
   @include lg-size() {
     --container-padding: #{$container-padding-large};
   }

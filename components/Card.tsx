@@ -13,7 +13,7 @@ interface Card {
   block?: boolean
 }
 
-export const Card = ({
+export const Card: React.FC = ({
   header,
   image,
   content,

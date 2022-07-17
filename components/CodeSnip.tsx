@@ -1,4 +1,4 @@
-export const CodeSnip = ({
+export const CodeSnip: React.FC = ({
   codeString
 }: {
   codeString: string
