@@ -4,7 +4,7 @@ import { ImageComponent } from '../components/ImageComponent'
 import { Shader } from '../components/Shader'
 
 const Cards: React.FC = (): JSX.Element => {
-  const image = 'abstract/jr-korpa-moclBG0oPyQ-unsplash.jpg'
+  const image = 'abstract/andre-benz-JBkwaYMuhdc-unsplash.jpg'
 
   return (
     <div style={{ '--card-divider': 3 } as React.CSSProperties}>
@@ -39,6 +39,7 @@ const Cards: React.FC = (): JSX.Element => {
             noBorder
           />
           <Card
+            header={<div className="h5">Header</div>}
             image={
               <ImageComponent
                 isStaticImage
@@ -124,7 +125,10 @@ const Cards: React.FC = (): JSX.Element => {
               </div>
             }
           />
-          <div style={{ '--card-divider': 2 } as React.CSSProperties}>
+          <div
+            className="d-flex justify-content-between"
+            style={{ '--card-divider': 2 } as React.CSSProperties}
+          >
             <Card
               header={<div>Header</div>}
               image={
@@ -140,11 +144,14 @@ const Cards: React.FC = (): JSX.Element => {
                   Repellendus modi minima recusandae, aliquid iusto cumque
                   provident amet soluta reiciendis doloribus quidem illum quo
                   sunt adipisci architecto molestias pariatur. Dicta, saepe!
+                  Illum quo sunt adipisci architecto molestias pariatur. Dicta,
+                  saepe!
                 </p>
               }
               links={
-                <div>
-                  <a className="link">Link</a>
+                <div className="d-flex justify-content-between">
+                  <button className="btn btn--primary">Button</button>
+                  <button className="btn btn--no-bg">Button</button>
                 </div>
               }
             />
@@ -164,6 +171,9 @@ const Cards: React.FC = (): JSX.Element => {
                   provident amet soluta reiciendis doloribus quidem illum quo
                   sunt adipisci architecto molestias pariatur. Dicta, saepe!
                 </p>
+              }
+              links={
+                <button className="btn btn--no-bg btn--block">Button</button>
               }
               footer={<p>Thanks for looking at this beautiful card</p>}
             />

@@ -5,13 +5,20 @@ import { conditionalClasses } from '../utils/helpers'
 import { useBemify } from '../hooks/useBemify'
 import { Routes } from '../utils/types'
 
+interface NavLinkProps {
+  routes: Routes[]
+  setShowDropdown: React.Dispatch<React.SetStateAction<boolean>>
+  pathname: string
+}
+
 export const Nav: React.FC = (): JSX.Element => {
   const routes: Routes[] = [
+    { path: '/Typography', title: 'Typography' },
+    { path: '/Flex', title: 'Flex' },
     { path: '/Cards', title: 'Cards' },
     { path: '/Colors', title: 'Colors' },
     { path: '/Images', title: 'Images' },
-    { path: '/Inputs', title: 'Inputs' },
-    { path: '/Typography', title: 'Typography' }
+    { path: '/Inputs', title: 'Inputs' }
   ]
 
   const [showDropdwon, setShowDropdown] = useState(false)
@@ -20,16 +27,25 @@ export const Nav: React.FC = (): JSX.Element => {
 
   return (
     <nav className={bem()}>
-      <div className="bg-midnight position-relative z-2 py-md px-xl d-flex justify-content-between align-items-center">
+      <div className="bg-midnight position-relative z-2 py-md px-md px-lg-xl d-flex justify-content-between align-items-center">
         <Link href="/">
           <a className="link nav-link link__no-underline">
-            <h5>Nav</h5>
+            <h4>Patrick Lake</h4>
           </a>
         </Link>
-        <NavDropdownIcon
-          active={showDropdwon}
-          setShowDropdown={setShowDropdown}
-        />
+        <div className="box-shadow d-none d-md-block">
+          <NavLinks
+            routes={routes}
+            setShowDropdown={setShowDropdown}
+            pathname={pathname}
+          />
+        </div>
+        <div className="d-block d-md-none">
+          <NavDropdownIcon
+            active={showDropdwon}
+            setShowDropdown={setShowDropdown}
+          />
+        </div>
       </div>
 
       <div
@@ -39,24 +55,11 @@ export const Nav: React.FC = (): JSX.Element => {
         ])}`}
       >
         <div className="py-md px-xl bg-lake-80 border-bottom box-shadow">
-          <ul className="d-flex flex-gap-md justify-content-flex-end align-items-flex-end flex-col flex-md-row">
-            {routes?.map(
-              ({ path, title }: Routes, index: number): JSX.Element => (
-                <li key={path + index} onClick={() => setShowDropdown(false)}>
-                  <Link href={path}>
-                    <a
-                      className={`link nav-link ${conditionalClasses([
-                        pathname === path,
-                        'link__active'
-                      ])}`}
-                    >
-                      {title}
-                    </a>
-                  </Link>
-                </li>
-              )
-            )}
-          </ul>
+          <NavLinks
+            routes={routes}
+            setShowDropdown={setShowDropdown}
+            pathname={pathname}
+          />
         </div>
       </div>
     </nav>
@@ -79,3 +82,28 @@ export const NavDropdownIcon = ({
     ></button>
   )
 }
+
+export const NavLinks: React.FC<NavLinkProps> = ({
+  routes,
+  setShowDropdown,
+  pathname
+}: NavLinkProps): JSX.Element => (
+  <ul className="d-flex flex-gap-md justify-content-flex-end align-items-flex-end flex-col flex-md-row flex-gap-none flex-gap-md-md flex-gap-lg-xl">
+    {routes?.map(
+      ({ path, title }: Routes, index: number): JSX.Element => (
+        <li key={path + index} onClick={() => setShowDropdown(false)}>
+          <Link href={path}>
+            <a
+              className={`link nav-link ${conditionalClasses([
+                pathname === path,
+                'link__active'
+              ])}`}
+            >
+              {title}
+            </a>
+          </Link>
+        </li>
+      )
+    )}
+  </ul>
+)

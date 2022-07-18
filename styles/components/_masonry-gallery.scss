@@ -1,6 +1,8 @@
 .mason-grid {
   column-count: var(--number-of-cols);
   column-gap: 10px;
+  min-height: 100vh;
+
   div {
     margin-bottom: 10px;
   }

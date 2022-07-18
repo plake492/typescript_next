@@ -91,7 +91,7 @@ const Images: React.FC = ({
           </div>
           <div
             id={currentGallery}
-            className="mason-grid px-md px-md-xl px-lg-xxl py-xl pswp-gallery"
+            className="mason-grid container py-xl pswp-gallery"
             style={{ '--number-of-cols': numberOfCols } as React.CSSProperties}
           >
             <SwitchTransition mode="out-in">

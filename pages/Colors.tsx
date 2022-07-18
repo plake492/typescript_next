@@ -55,26 +55,30 @@ const Colors: React.FC = (): JSX.Element => {
     <>
       <div className="container py-xxxl">
         <h3>Shader</h3>
-        <div>
-          <label>Specular Blend</label>
-          <select onChange={e => setSpecularBlend(e.target.value)}>
-            {options.map((option, index) => (
-              <option key={option + index} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+        <div className="mb-md">
+          <div className="select">
+            <label>Specular Blend</label>
+            <select onChange={e => setSpecularBlend(e.target.value)}>
+              {options.map((option, index) => (
+                <option key={option + index} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <div>
-          <label>Mask Blend</label>
-          <select onChange={e => setMaskBelnd(e.target.value)}>
-            {options.map((option, index) => (
-              <option key={option + index} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+        <div className="mb-md">
+          <div className="select">
+            <label>Mask Blend</label>
+            <select onChange={e => setMaskBelnd(e.target.value)}>
+              {options.map((option, index) => (
+                <option key={option + index} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
       <div className="container">
