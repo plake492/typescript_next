@@ -11,8 +11,14 @@ interface NavLinkProps {
   pathname: string
 }
 
+interface NavDropdownIconProps {
+  active: boolean
+  setShowDropdown: Dispatch<SetStateAction<boolean>>
+}
+
 export const Nav: React.FC = (): JSX.Element => {
   const routes: Routes[] = [
+    { path: '/', title: 'Home' },
     { path: '/Typography', title: 'Typography' },
     { path: '/Flex', title: 'Flex' },
     { path: '/Cards', title: 'Cards' },
@@ -66,19 +72,17 @@ export const Nav: React.FC = (): JSX.Element => {
   )
 }
 
-export const NavDropdownIcon = ({
+export const NavDropdownIcon: React.FC<NavDropdownIconProps> = ({
   active,
   setShowDropdown
-}: {
-  active: boolean
-  setShowDropdown: Dispatch<SetStateAction<boolean>>
-}): JSX.Element => {
+}: NavDropdownIconProps): JSX.Element => {
   const bem = useBemify('nav-icon')
 
   return (
     <button
       className={`${bem()} ${conditionalClasses([active, 'active'])}`}
       onClick={() => setShowDropdown(!active)}
+      aria-label="Open Nav"
     ></button>
   )
 }

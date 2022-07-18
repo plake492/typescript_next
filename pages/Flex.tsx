@@ -3,7 +3,7 @@ import { CodeSnip } from '../components/CodeSnip'
 import { Hero } from '../components/Hero'
 import { ImageComponent } from '../components/ImageComponent'
 
-const Flex = () => {
+const Flex: React.FC = (): JSX.Element => {
   const image = 'abstract/pawel-czerwinski-fPN1w7bIuNU-unsplash.jpg'
   const justifyContent = [
     'justify-content-between',
@@ -18,13 +18,11 @@ const Flex = () => {
     <main className="bg-slate-grey">
       <Hero
         content={
-          <div className="bg-violet px-xl pt-md pb-xl border-rounded d-inline-block w-max-75">
+          <div className="bg-slate-grey-10 px-xl pt-md pb-xl border-rounded">
             <h1>Flex Box</h1>
             <p>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse
-              praesentium nam, a nostrum explicabo cupiditate alias corporis
-              incidunt eveniet saepe natus, eaque corrupti fugiat optio
-              asperiores iusto ex placeat facere.
+              praesentium nam,
             </p>
           </div>
         }
