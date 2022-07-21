@@ -1,0 +1,272 @@
+.calendar {
+  --calendar-vertical-rows: 6;
+  --calendar-days-ratio: calc(7 / var(--calendar-vertical-rows));
+
+  --calendar-height: 600px;
+  --calendar-input-height: calc(var(--calendar-height) / 12);
+
+  // Calendar
+  --calendar-calendar-padding: #{$space-md};
+  --calendar-calendar-height: calc(
+    var(--calendar-height) - var(--calendar-input-height)
+  );
+
+  // TODO Add Bg and text colors here
+  //   --calendar-calendar-bg-color:
+  //   --calendar-calendar-text-color:
+
+  // Year
+  --calendar-year-height: calc(var(--calendar-height) / 12);
+  --calendar-year-text-align: center;
+  --calendar-year-padding-x: #{$space-sm};
+  --calendar-year-padding-y: 0px;
+  --calendar-year-margin-x: 0px;
+  --calendar-year-margin-y: #{$space-md};
+
+  // Month
+  // --calendar-month-height: calc(var(--calendar-height) / 14);
+  --calendar-month-height: var(--calendar-year-height);
+  --calendar-month-text-align: center;
+  --calendar-month-padding-x: #{$space-sm};
+  --calendar-month-padding-y: 0px;
+  --calendar-month-margin-x: 0px;
+  --calendar-month-margin-y: 0px;
+
+  // Days Names
+  --calendar-days-names-height: calc(var(--calendar-height) / 16);
+  --calendar-days-names-font-size: 1.5rem;
+
+  // Days Wrapper
+  --calendar-days-wrapper-height: calc(
+    var(--calendar-height) - var(--calendar-input-height) -
+      var(--calendar-year-height) - var(--calendar-year-padding-y) -
+      (var(--calendar-year-margin-y) * 2) - var(--calendar-days-names-height) -
+      (var(--calendar-calendar-padding) * 2)
+  );
+
+  // Day
+  --calendar-day-height: calc(
+    var(--calendar-days-wrapper-height) / var(--calendar-vertical-rows)
+  );
+  --calendar-day-font-size: 1.8rem;
+
+  // Calculate calendar width to keep days blocks are perfect squares
+  --calendar-width: calc(
+    (var(--calendar-days-wrapper-height) * var(--calendar-days-ratio)) +
+      (var(--calendar-calendar-padding) * 2)
+  );
+
+  // Selected Day
+  --calendar-selected-day-bg-color: var(--bg-midnight);
+
+  // Selected Range
+  --calendar-selected-range-day-bg-color: var(--bg-midnight-60);
+  --calendar-selected-range-height: 85%;
+  --calendar-selected-width: 0%;
+
+  background-color: $white;
+  height: var(--calendar-height);
+  width: var(--calendar-width);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0 auto;
+
+  &__input-wrapper {
+    @extend .bg-slate-grey;
+    width: 100%;
+    height: var(--calendar-input-height);
+    padding: $space-md;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__calendar-wrapper {
+    height: var(--calendar-calendar-height);
+    width: 100%;
+
+    @extend .bg-lake; // TODO Update Colors
+    padding: $space-md;
+  }
+
+  &__calendar-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $space-md;
+  }
+
+  &__calendar-year {
+    height: var(--calendar-year-height);
+    padding: var(--calendar-year-padding-y) var(--calendar-year-padding-x);
+    margin: var(--calendar-year-margin-y) var(--calendar-year-margin-x);
+    text-align: var(--calendar-year-text-align);
+    display: flex;
+    align-items: center;
+  }
+
+  &__calendar-month {
+    height: var(--calendar-month-height);
+    padding: var(--calendar-month-padding-y) var(--calendar-month-padding-x);
+    margin: var(--calendar-month-margin-y) var(--calendar-month-margin-x);
+    text-align: var(--calendar-month-text-align);
+    display: flex;
+    align-items: center;
+  }
+
+  &__calendar-days-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    height: var(--calendar-days-wrapper-height);
+  }
+
+  &__calendar-days {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__calendar-day-name {
+    --base-font-size: var(--calendar-days-names-font-size);
+
+    height: var(--calendar-days-names-height);
+    flex-basis: calc(100% / 7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__calendar-day-wrapper {
+    --base-font-size: var(--calendar-day-font-size);
+
+    height: var(--calendar-day-height);
+    transition: background-color 300ms ease-in-out;
+    flex-basis: calc(100% / 7);
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__calendar-day {
+    --calender-day-border-color: #{$black};
+    --calender-day-border-width: 0px;
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: var(--calender-day-border-width) solid
+      var(--calender-day-border-color);
+
+    &:hover:not(.is-disabled) {
+      --calender-day-border-width: 1px;
+    }
+
+    &.is-disabled {
+      cursor: default;
+    }
+
+    &.selected {
+      background-color: var(--calendar-selected-day-bg-color);
+    }
+
+    &.selected-start-day {
+      &::before {
+        content: '';
+        position: absolute;
+        width: var(--calendar-selected-width);
+        height: var(--calendar-selected-range-height);
+        background-color: var(--calendar-selected-range-day-bg-color);
+        right: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        z-index: -1;
+      }
+    }
+
+    &.selected-end-day {
+      &::before {
+        content: '';
+        position: absolute;
+        width: var(--calendar-selected-width);
+        height: var(--calendar-selected-range-height);
+        background-color: var(--calendar-selected-range-day-bg-color);
+        left: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        z-index: -1;
+      }
+    }
+
+    &.in-selected-range {
+      &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: var(--calendar-selected-range-height);
+        background-color: var(--calendar-selected-range-day-bg-color);
+        left: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        z-index: -1;
+      }
+    }
+
+    // Handle Weekend Selections
+    &--weekend-start {
+      &.in-selected-range {
+        &::before {
+          width: 125%;
+          left: -25%;
+
+          background: linear-gradient(
+            90deg,
+            var(--bg-lake) 0%,
+            var(--calendar-selected-range-day-bg-color) 50%
+          );
+        }
+      }
+      &.selected-end-day {
+        &::before {
+          width: 75%;
+          left: -25%;
+
+          background: linear-gradient(
+            90deg,
+            var(--bg-lake) 0%,
+            var(--calendar-selected-range-day-bg-color) 50%
+          );
+        }
+      }
+    }
+    &--weekend-end {
+      &.in-selected-range {
+        &::before {
+          width: 125%;
+          left: 0%;
+
+          background: linear-gradient(
+            90deg,
+            var(--calendar-selected-range-day-bg-color) 50%,
+            var(--bg-lake) 100%
+          );
+        }
+      }
+
+      &.selected-start-day {
+        &::before {
+          width: 75%;
+          right: -25%;
+
+          background: linear-gradient(
+            90deg,
+            var(--calendar-selected-range-day-bg-color) 50%,
+            var(--bg-lake) 100%
+          );
+        }
+      }
+    }
+  }
+}
