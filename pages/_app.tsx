@@ -2,13 +2,11 @@ import '../styles/index.scss'
 import Head from 'next/head'
 import { SwitchTransition, CSSTransition } from 'react-transition-group'
 import { Nav } from '../components/Nav'
+import { Footer } from '../components/Footer'
 
 const MyApp = ({ Component, pageProps, router }): JSX.Element => {
   return (
     <>
-      <Head>
-        <meta name="theme-color" content="#3c1742" />
-      </Head>
       <Nav />
       <SwitchTransition mode="out-in">
         <CSSTransition
@@ -19,6 +17,7 @@ const MyApp = ({ Component, pageProps, router }): JSX.Element => {
           <Component {...pageProps} />
         </CSSTransition>
       </SwitchTransition>
+      <Footer />
     </>
   )
 }

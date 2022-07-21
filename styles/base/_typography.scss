@@ -4,7 +4,7 @@
 // /**************************************************/
 :root {
   @include make-responsive-var(
-    --text-base-size,
+    --base-font-size,
     $font-base-sizes,
     $font-size-min
   );
@@ -21,14 +21,14 @@
   );
 
   --text-xs-size: min(
-    #{calc(var(--text-base-size) * 0.888)},
+    #{calc(var(--base-font-size) * 0.888)},
     #{$font-size-min}
   );
   --line-height-ratio: #{$line-height-ratio};
   --line-height-ratio-headers: #{$line-height-ratio-headers};
   --text-color: #{$text-main};
   --base-font-weight: 300;
-  --base-line-height: calc(var(--text-base-size) * var(--line-height-ratio));
+  --base-line-height: calc(var(--base-font-size) * var(--line-height-ratio));
 }
 
 * {
@@ -42,7 +42,7 @@ html {
 
 body {
   font-family: $primary-font;
-  font-size: var(--text-base-size);
+  font-size: var(--base-font-size);
   font-style: normal;
   font-weight: var(--base-font-weight);
   letter-spacing: 0.08rem;
@@ -55,25 +55,25 @@ p,
 .text,
 .text-md {
   line-height: var(--base-line-height);
-  font-size: var(--text-base-size);
+  font-size: var(--base-font-size);
   font-weight: 300;
   color: var(--text-color);
 }
 
 .text-lg {
-  --text-base-size: var(--text-lg-size);
-  --base-line-height: calc(var(--text-base-size) * var(--line-height-ratio));
+  --base-font-size: var(--text-lg-size);
+  --base-line-height: calc(var(--base-font-size) * var(--line-height-ratio));
 }
 
 .text-sm {
-  --text-base-size: var(--text-sm-size);
-  --base-line-height: calc(var(--text-base-size) * var(--line-height-ratio));
+  --base-font-size: var(--text-sm-size);
+  --base-line-height: calc(var(--base-font-size) * var(--line-height-ratio));
 }
 
 small,
 .text-xs {
-  --text-base-size: var(--text-xs-size);
-  --base-line-height: calc(var(--text-base-size) * var(--line-height-ratio));
+  --base-font-size: var(--text-xs-size);
+  --base-line-height: calc(var(--base-font-size) * var(--line-height-ratio));
 }
 
 // Generate Header fonts and line heights

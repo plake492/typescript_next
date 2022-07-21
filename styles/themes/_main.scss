@@ -25,9 +25,9 @@ nav,
 code {
   display: block;
   font-family: 'Orbitron', sans-serif;
-  --text-base-size: var(--text-xs-size);
-  --base-line-height: calc(var(--text-base-size) * var(--line-height-ratio));
-  font-size: var(--text-base-size);
+  --base-font-size: var(--text-xs-size);
+  --base-line-height: calc(var(--base-font-size) * var(--line-height-ratio));
+  font-size: var(--base-font-size);
   line-height: var(--base-line-height);
   padding: $space-md $space-xl $space-md $space-md;
   background-color: $black;

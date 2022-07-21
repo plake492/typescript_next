@@ -1,6 +1,8 @@
-import React from 'react'
-
-export const Hero = ({ children, content }) => {
+interface HeroProps {
+  children: JSX.Element
+  content?: JSX.Element
+}
+export const Hero = ({ children, content }: HeroProps) => {
   return (
     <div className="box-shadow angle-left-right position-relative">
       {children}

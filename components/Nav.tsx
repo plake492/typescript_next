@@ -24,7 +24,8 @@ export const Nav: React.FC = (): JSX.Element => {
     { path: '/Cards', title: 'Cards' },
     { path: '/Colors', title: 'Colors' },
     { path: '/Images', title: 'Images' },
-    { path: '/Inputs', title: 'Inputs' }
+    { path: '/Inputs', title: 'Inputs' },
+    { path: '/Calendar', title: 'Calendar' }
   ]
 
   const [showDropdwon, setShowDropdown] = useState(false)
