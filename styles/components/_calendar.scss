@@ -2,7 +2,7 @@
   --calendar-vertical-rows: 6;
   --calendar-days-ratio: calc(7 / var(--calendar-vertical-rows));
 
-  --calendar-height: 600px;
+  --calendar-height: 450px;
   --calendar-input-height: calc(var(--calendar-height) / 12);
 
   // Calendar
@@ -64,13 +64,18 @@
   --calendar-selected-range-height: 85%;
   --calendar-selected-width: 0%;
 
-  background-color: $white;
   height: var(--calendar-height);
   width: var(--calendar-width);
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   margin: 0 auto;
+  box-shadow: $box-shadow;
 
+  @include md-size() {
+    --calendar-height: 600px;
+  }
+
+  // Top Input Header
   &__input-wrapper {
     @extend .bg-slate-grey;
     width: 100%;
@@ -80,6 +85,7 @@
     justify-content: space-between;
   }
 
+  // Overall Calendar Wrapper
   &__calendar-wrapper {
     height: var(--calendar-calendar-height);
     width: 100%;
@@ -88,14 +94,39 @@
     padding: $space-md;
   }
 
-  &__calendar-header {
+  // Calendar-header
+  &__header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 calc(var(--calendar-calendar-padding) * 2);
+  }
+
+  &__month-year-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex: 1;
     gap: $space-md;
   }
 
-  &__calendar-year {
+  &__arrow {
+    width: 25px;
+    height: 25px;
+    transition: 0.5s;
+    box-shadow: -2px 2px 0 var(--text-color);
+    cursor: pointer;
+  }
+
+  &__arrow-left {
+    transform: rotate(45deg);
+  }
+
+  &__arrow-right {
+    transform: rotate(-135deg);
+  }
+
+  &__year {
     height: var(--calendar-year-height);
     padding: var(--calendar-year-padding-y) var(--calendar-year-padding-x);
     margin: var(--calendar-year-margin-y) var(--calendar-year-margin-x);
@@ -104,7 +135,7 @@
     align-items: center;
   }
 
-  &__calendar-month {
+  &__month {
     height: var(--calendar-month-height);
     padding: var(--calendar-month-padding-y) var(--calendar-month-padding-x);
     margin: var(--calendar-month-margin-y) var(--calendar-month-margin-x);
@@ -113,20 +144,20 @@
     align-items: center;
   }
 
-  &__calendar-days-wrapper {
+  &__days-wrapper {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
     height: var(--calendar-days-wrapper-height);
   }
 
-  &__calendar-days {
+  &__days {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  &__calendar-day-name {
+  &__day-name {
     --base-font-size: var(--calendar-days-names-font-size);
 
     height: var(--calendar-days-names-height);
@@ -136,7 +167,7 @@
     justify-content: center;
   }
 
-  &__calendar-day-wrapper {
+  &__day-wrapper {
     --base-font-size: var(--calendar-day-font-size);
 
     height: var(--calendar-day-height);
@@ -145,9 +176,13 @@
     cursor: pointer;
     position: relative;
     z-index: 1;
+
+    &.is-disabled {
+      cursor: default;
+    }
   }
 
-  &__calendar-day {
+  &__day {
     --calender-day-border-color: #{$black};
     --calender-day-border-width: 0px;
 
@@ -165,7 +200,7 @@
     }
 
     &.is-disabled {
-      cursor: default;
+      pointer-events: none;
     }
 
     &.selected {

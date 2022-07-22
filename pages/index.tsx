@@ -20,7 +20,6 @@ export default function Home({ photos }) {
   const inputRef = useRef()
   const [input, setInput] = useState('')
   const { width, height } = useResizeObserver(inputRef, ['padding'])
-  console.log('photos==>>', photos)
 
   const [imgWidth, imgHeight] = getImgSize(photos[0].picture)
 

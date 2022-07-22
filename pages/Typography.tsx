@@ -5,6 +5,7 @@ import { ImageComponent } from '../components/ImageComponent'
 const Typography: React.FC = (): JSX.Element => (
   <main className="bg-slate-grey">
     <Hero
+      hasAngle
       content={
         <div className="container py-xxl">
           <h1>Header 1</h1>

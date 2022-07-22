@@ -29,3 +29,7 @@ export const monthsShort: string[] = [
   'Nov',
   'Dec'
 ]
+
+export const years: number[] = [...Array(100)].map(
+  (_, i: number): number => i + 1970
+)

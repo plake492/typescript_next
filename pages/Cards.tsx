@@ -1,7 +1,6 @@
 import React from 'react'
 import { Card } from '../components/Card'
 import { ImageComponent } from '../components/ImageComponent'
-import { Shader } from '../components/Shader'
 
 const Cards: React.FC = (): JSX.Element => {
   const image = 'abstract/andre-benz-JBkwaYMuhdc-unsplash.jpg'

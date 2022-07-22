@@ -17,6 +17,7 @@ const Flex: React.FC = (): JSX.Element => {
   return (
     <main className="bg-slate-grey">
       <Hero
+        hasAngle
         content={
           <div className="bg-slate-grey-10 px-xl pt-md pb-xl border-rounded">
             <h1>Flex Box</h1>
