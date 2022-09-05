@@ -1,15 +1,5 @@
-@import './abstract/variables';
-@import './abstract/mixins';
-@import './abstract/functions';
+// * Import as if it's a node module
+@import './sass_framework/';
 
-@import './reset/reset';
-
-@import './vendors/';
-
-@import './base/';
-
-@import './utils/';
-
-@import './components/';
-
-@import './themes/main.scss';
+// * Styles that are on;y relavent to this site
+@import './app/';

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getColorVars } from '../utils/helpers'
+import { getCssVar } from '../utils/helpers'
 import { Shader } from '../components/Shader'
 import { ImageComponent } from '../components/ImageComponent'
 
@@ -14,19 +14,19 @@ const Colors: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     const cssVarTarget = '--bg-'
-    const colorVars = getColorVars({ cssVarTarget: cssVarTarget })
+    const colorVars = getCssVar({ cssVarTarget: cssVarTarget })
     setColors(colorVars)
 
     const cssVarTargetAnalg = '--analg-bg'
-    const analgColorVars = getColorVars({ cssVarTarget: cssVarTargetAnalg })
+    const analgColorVars = getCssVar({ cssVarTarget: cssVarTargetAnalg })
     setAnalagColors(analgColorVars)
 
     const cssVarTargetMono = '--mono-bg'
-    const monoColorVars = getColorVars({ cssVarTarget: cssVarTargetMono })
+    const monoColorVars = getCssVar({ cssVarTarget: cssVarTargetMono })
     setMonoColors(monoColorVars)
 
     const cssVarTargetComp = '--comp-bg'
-    const compColorVars = getColorVars({ cssVarTarget: cssVarTargetComp })
+    const compColorVars = getCssVar({ cssVarTarget: cssVarTargetComp })
     setCompolors(compColorVars)
   }, [])
 
@@ -105,7 +105,7 @@ const Colors: React.FC = (): JSX.Element => {
                 ''
               )} card mb-none w-min-100 py-md px-md`}
             >
-              <p className="small">Lorem ipsum dolor sit amet,</p>
+              <p className="small">{color}</p>
             </div>
           ))}
         </div>
@@ -123,7 +123,7 @@ const Colors: React.FC = (): JSX.Element => {
                 ''
               )} card w-min-100 py-md px-md`}
             >
-              <p className="small">Lorem ipsum dolor sit amet,</p>
+              <p className="small">{color}</p>
             </div>
           ))}
         </div>
@@ -141,7 +141,7 @@ const Colors: React.FC = (): JSX.Element => {
                 ''
               )} card w-min-100 py-md px-md`}
             >
-              <p className="small">Lorem ipsum dolor sit amet,</p>
+              <p className="small">{color}</p>
             </div>
           ))}
         </div>
@@ -159,7 +159,7 @@ const Colors: React.FC = (): JSX.Element => {
                 ''
               )} card w-min-100 py-md px-md`}
             >
-              <p className="small">Lorem ipsum dolor sit amet,</p>
+              <p className="small">{color}</p>
             </div>
           ))}
         </div>

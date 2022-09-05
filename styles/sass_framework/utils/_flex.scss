@@ -5,8 +5,8 @@
   @each $flex-titles, $values2 in $values1 {
     @each $flex-spec, $flex-val in $values2 {
       .#{$flex-titles}-#{$flex-spec} {
-        @if ($flex-titles == 'flex-gap') {
-          --flex-gap-offset: #{calc($flex-val / 2)};
+        @if ($flex-titles == 'gap') {
+          --gap-offset: #{calc($flex-val / 2)};
         }
         #{$flex-prop-target}: $flex-val;
       }
@@ -16,7 +16,7 @@
 
 @for $i from 1 to 11 {
   .flex-#{$i} {
-    flex-grow: $i;
+    flex: $i;
   }
 }
 
@@ -29,8 +29,8 @@
       @each $flex-titles, $values2 in $values1 {
         @each $flex-spec, $flex-val in $values2 {
           .#{$flex-titles}-#{$bp}-#{$flex-spec} {
-            @if ($flex-titles == 'flex-gap') {
-              --flex-gap-offset: #{calc($flex-val / 2)};
+            @if ($flex-titles == 'gap') {
+              --gap-offset: #{calc($flex-val / 2)};
             }
             #{$flex-prop-target}: $flex-val;
           }
@@ -44,4 +44,11 @@
       }
     }
   }
+}
+
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,6 +1,6 @@
 .card {
   --card-width: calc(
-    (100% / var(--card-divider, 3)) - (var(--flex-gap-offset) / 0.5)
+    (100% / var(--card-divider, 3)) - (var(--gap-offset) / 0.5)
   );
   --card-border: #{$border-radius};
   --card-border-width: #{$border-width};

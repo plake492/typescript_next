@@ -1,11 +1,33 @@
 import { urlFor } from '../lib/sanity'
 
+export const parseCSSVar = (element: any, ...props: any[]) => {
+  console.log(element)
+  if (typeof window !== 'undefined') {
+    const computedStyle = window?.getComputedStyle(element)
+
+    const parsedValues = {}
+
+    props.forEach(prop => {
+      const formatted = prop.replace('--', '')
+      const rawValue = computedStyle.getPropertyValue(`--${formatted}`)
+      const strippedValue = rawValue.replace('px', '')
+      const parsedValue = parseFloat(strippedValue)
+      const key = formatted.replace(/-([a-z])/g, g => g[1].toUpperCase())
+      parsedValues[key] = Number.isNaN(parsedValue)
+        ? rawValue.trim()
+        : parsedValue
+    })
+
+    return parsedValues
+  }
+}
+
 /**
  * TODO WORK IN PROGRESS
  * @param param0
  * @returns Array of css variables
  */
-export const getColorVars = ({ cssVarTarget }) => {
+export const getCssVar = ({ cssVarTarget }) => {
   type cssObj = {
     [key: string]: any
   }

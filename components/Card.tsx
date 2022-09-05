@@ -1,3 +1,4 @@
+import { be } from 'date-fns/locale'
 import React from 'react'
 import { useBemify } from '../hooks/useBemify'
 import { conditionalClasses } from '../utils/helpers'
@@ -25,13 +26,16 @@ export const Card: React.FC<Card> = ({
 }: Card): JSX.Element => {
   const bem: Function = useBemify('card')
 
+  const border = noBorder ? '--no-border' : ''
+  const isBlock = block ? '--block' : ''
+
   return (
     <div
-      className={`${bem()} ${conditionalClasses(
-        [noBorder, bem('--no-border')],
-        [bg, `bg-${bg}`],
-        [block, bem('--block')]
-      )}`}
+      className={
+        bem([bg, `bg-${bg}`]) +
+        (noBorder ? +' ' + bem('--no-border') : '') +
+        (block ? ' ' + bem('--block') : ' ')
+      }
     >
       {header && <div className={bem('header')}>{header}</div>}
       {image && (

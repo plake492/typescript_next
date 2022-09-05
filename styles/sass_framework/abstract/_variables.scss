@@ -15,49 +15,54 @@ $breakpoints: (
 // ******************** Fonts ***********************
 // **************************************************
 
-$primary-font: Verdana, sans-serif;
+$primary-font: 'Heebo', sans-serif;
+$secondary-font: 'Orbitron', sans-serif;
 
 $font-weights: (100, 200, 300, 400, 500, 600, 700, 800, 900);
 
-// Responsive ***************************************
+// /**************************************************/
+// /* Responsive fonts */
+// /**************************************************/
 
+// ratio to update the header font / line-height sizes
 $header-font-modifiers: (
-  // ratio to update the header font / line-height sizes
-  sm: 0.666,
-  md: 0.7,
-  lg: 0.78,
-  xl: 0.888
+  sm: 0.6,
+  md: 0.65,
+  lg: 0.7,
+  xl: 0.75
+);
+
+$font-xs-sizes: (
+  md: 1.4rem,
+  lg: 1.6rem
 );
 
 $font-sm-sizes: (
-  sm: 1.2rem,
-  md: 1.3rem,
-  lg: 1.4rem,
-  xl: 1.6rem
+  md: 1.6rem,
+  lg: 1.8rem
 );
 
 $font-base-sizes: (
-  sm: 1.4rem,
-  md: 1.5rem,
-  lg: 1.6rem,
-  xl: 1.8rem
+  md: 1.8rem,
+  lg: 2rem
 );
 
 $font-lg-sizes: (
-  sm: 1.6rem,
-  md: 1.8rem,
-  lg: 2rem,
-  xl: 2.2rem
+  md: 2rem,
+  lg: 2.2rem
 );
 
 $headers: ('6', '5', '4', '3', '2', '1');
 
-$font-size-standard: 1.6rem;
-$font-size-min: 1.4rem;
-// Set Ratios *************************************
+$font-size-standard: 2rem;
 
-$line-height-ratio: 1.55;
-$line-height-ratio-headers: 1.222;
+// /**************************************************/
+// /* Line Height Ratios */
+// /**************************************************/
+$line-height-ratio: 1.6;
+
+// This values will affect the Header font-sizes
+$line-height-ratio-headers: 1.2;
 
 // **************************************************
 // ******************** Spacing *********************
@@ -65,10 +70,11 @@ $line-height-ratio-headers: 1.222;
 $base-spacing: 1.6rem;
 
 $space-none: 0;
+$space-xs: $base-spacing * 0.25;
 $space-sm: $base-spacing * 0.5;
 $space-md: $base-spacing;
-$space-lg: $base-spacing * 1.5;
-$space-xl: $base-spacing * 2;
+$space-lg: $base-spacing * 2;
+$space-xl: $base-spacing * 3;
 $space-xxl: $base-spacing * 4;
 $space-xxxl: $base-spacing * 8;
 
@@ -153,7 +159,8 @@ $target-colors: (
   red-rocks: $red-rocks,
   violet: $violet,
   midnight: $midnight,
-  lake: $lake
+  lake: $lake,
+  white: $white
 );
 
 $tones: 10, 20, 30, 40, 50, 60, 70, 80;
@@ -289,7 +296,7 @@ $flex: (
     order: $order
   ),
   gap: (
-    flex-gap: $spacers
+    gap: $spacers
   ),
   flex-basis: (
     flex-basis: $flex-basis
@@ -306,13 +313,31 @@ $borders: (top, right, bottom, left, all);
 // ***************** Widths *************************
 // **************************************************
 
-$width-percentages: (
+$width--height-percentages: (
   25: 25%,
   33: 33%,
   50: 50%,
   66: 66%,
   75: 75%,
   100: 100%
+);
+
+$height-vh: (
+  25: 25vh,
+  33: 33vh,
+  50: 50vh,
+  66: 66vh,
+  75: 75vh,
+  100: 100vh
+);
+
+$width-vw: (
+  25: 25vw,
+  33: 33vw,
+  50: 50vw,
+  66: 66vw,
+  75: 75vw,
+  100: 100vw
 );
 
 // **************************************************
@@ -348,3 +373,11 @@ $above-everyhting: 999999;
 // **************************************************
 
 $text-alignment: (start, end, center, right, left);
+
+// **************************************************
+// ***************** Misc ***************************
+// **************************************************
+
+$list-item-icon: '\276F';
+
+$underline-bottom: 0px;

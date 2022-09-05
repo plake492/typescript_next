@@ -12,7 +12,7 @@ export const CodeSnip: React.FC<CodeString> = ({
   useEffect(() => {
     const id = window.setTimeout(() => {
       setShowIsCopied(false)
-    }, 5000)
+    }, 3000)
 
     return () => window.clearTimeout(id)
   }, [showIsCopied])

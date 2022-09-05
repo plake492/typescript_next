@@ -55,7 +55,7 @@ const Images: React.FC = ({
           priority
         />
         <div className="bg-slate-grey pt-md pb-xl">
-          <div className="container d-flex flex-gap-xl">
+          <div className="container d-flex gap-xl">
             {galleries?.map(
               ({ name }: { name: string }, index: number): JSX.Element => (
                 <a

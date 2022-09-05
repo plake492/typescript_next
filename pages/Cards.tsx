@@ -11,7 +11,7 @@ const Cards: React.FC = (): JSX.Element => {
         <ImageComponent isStaticImage width={1000} src={image} priority />
       </div>
       <div className="container py-xxl">
-        <div className="d-flex flex-wrap flex-gap-xl justify-content-between">
+        <div className="d-flex flex-wrap gap-xl justify-content-between">
           <Card
             bg="lake-80"
             header={<div className="h5">Header</div>}

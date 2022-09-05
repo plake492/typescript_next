@@ -1,63 +1,78 @@
 import { useMemo } from 'react'
+import { conditionalClasses } from '../utils/helpers'
 
-// Some quick helper methods becuase laziness...
-const isStr = (str: string | string[]): boolean => typeof str === 'string'
+// Some quick helper methods
+const isString = (v: any): boolean => typeof v === 'string'
+const isBool = (v: any): boolean => typeof v === 'boolean'
+const isArray = (v: any): boolean => Array.isArray(v)
+const formatClass = (v: string): string => (v.startsWith('--') ? v : `__${v}`)
 
 const bemify =
   (block: string): Function =>
-  (element: string | undefined, ...classes: (string | boolean)[]) => {
+  /**
+   * Use this encolsed function to construct classes based on the BEM naming convention
+   * @param element string
+   * @param classes ..rest: string | []
+   *     STRING: if passing a string, the string wil be added to the block and element as either an additional element
+   *     `block__element__extra-element`, or will add the string as a modifier `block__element--modified`
+   *     ARRAY if passing an array, there are two possible outcomes:
+   *         1. An array starting with a boolean condition will check that condition and returm the string at
+   *            arr[1] if true, or an optional fallback value at arr[2], which defaults to ''.
+   *         2. An array of any length containing strings will add those strings to the
+   *            output class `nav__button disabled light `
+   * @returns String
+   */
+  (
+    element: string | undefined,
+    ...classes: ((string | boolean | (string | undefined))[][] | string[])[]
+  ) => {
     // We combine the block and element or return the block itself
-    const combined: string = element
-      ? `${block}${element?.startsWith('--') ? '' : '__'}${element}`
-      : block
+    let combined: string = element ? `${block}__${element}` : block
+    let formedClasses: string
 
-    const formedClasses: string[] =
-      classes && classes.length
-        ? classes
-            .map((c: string) => {
-              // make sure there is no funny business
-              if (!c) return null
+    if (classes && classes.length) {
+      // Sort the classes params based on multiple conditions
+      const [conditionals, additionalElements, additionalClasses]: [
+        (string | boolean | (string | undefined))[][],
+        string[],
+        string[][]
+      ] = classes.reduce(
+        (acc: any, cur: any): [][][] => {
+          if (isArray(cur))
+            if (isString(cur[0])) acc[2] = [...acc[2], cur]
+            else if (isBool(cur[0])) acc[0] = [...acc[0], cur]
+          if (isString(cur)) acc[1] = [...acc[1], formatClass(cur)]
+          return acc
+        },
+        [[], [], []]
+      )
 
-              // Initialize the base classname
-              let className: string = isStr(c) ? c : ''
-
-              // Ensure that classname is always a string
-              if (!isStr(className)) className = ''
-
-              return className
-            })
-            .filter(c => !!c)
-        : []
-
-    // Join the classes into a big array and then combine them
-    return [combined, ...formedClasses].join(' ')
+      if (conditionals.length)
+        formedClasses = conditionalClasses(
+          ...conditionals.filter(
+            ([b, v1, v2 = '']) => isBool(b) && isString(v1) && isString(v2)
+          )
+        )
+      if (additionalElements.length) combined += additionalElements.join('')
+      if (additionalClasses.length)
+        combined += additionalClasses.map(
+          // Add spaces to start, end, and replace commas with space
+          (classArr: string[]) =>
+            ` ${classArr
+              .filter(v => isString(v))
+              .join(',')
+              .replace(/,/g, ' ')} `
+        )
+    }
+    // Combine the classes
+    return [combined, formedClasses].join(' ')
   }
 
-// Let's make a hook that makes this easier to use. We can wrap it in a useMemo so we don't have to waste resources by instantiating it on every render
+/**
+ * This is a helpful utility function that makes class concatenation in react easier
+ * Calling the bemify function returns a function with the Block value accessible via closures
+ * @param block
+ * @returns Function
+ */
 export const useBemify = (block: string) =>
-  useMemo(() => bemify(block), [block])
-
-/*
-  This is a helpful utility function that makes class concatenation in react easier
-
-  Calling the bemify function returns a function with the Block value accessible via closures
-
-  const bem = bemify("card") // This creates a function that can be called so we don't have to retype the base name
-  The first param this new bem function takes is the element name and all other argumrnts are classes to be concatenated
-
-  1. Pass no params and get just the block name
-  bem()
-    => "card"
-
-  2. Pass a single argument and get the block + element
-  bem("photo")
-    => "card__photo"
-
-  3. Pass a second argument to be concatenated
-  bem("button", "disabled")
-    => "card__button disabled"
-
-  4. Pass as many classes as you want
-  bem("button", "rounded", "outlined", "disabled")
-    => "card__button rounded outlined disabled"
-*/
+  useMemo((): Function => bemify(block), [block])

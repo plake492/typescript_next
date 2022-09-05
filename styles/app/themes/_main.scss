@@ -4,11 +4,14 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   overflow-x: hidden;
   min-height: 100vh;
   background-color: var(--bg-color);
-  overflow-wrap: break-word;
 }
 
 .body-is-fixed {
@@ -30,5 +33,6 @@ code {
   font-size: var(--base-font-size);
   line-height: var(--base-line-height);
   padding: $space-md $space-xl $space-md $space-md;
-  background-color: $black;
+  // background-color: $black;
+  @extend .bg-midnight;
 }

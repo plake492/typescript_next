@@ -6,6 +6,7 @@ import { ImageComponent } from '../components/ImageComponent'
 
 import { sanityClient, urlFor } from '../lib/sanity'
 import { getImgSize } from '../utils/helpers'
+import { useBemify } from '../hooks/useBemify'
 
 const photosQuery: string = `*[_type == "photography"] | order(order asc) {
   _id,
@@ -23,6 +24,8 @@ export default function Home({ photos }) {
 
   const [imgWidth, imgHeight] = getImgSize(photos[0].picture)
 
+  const bem = useBemify('HEADER')
+
   return (
     <main>
       <div className="border-radius overflow-hidden angle-left-right">
@@ -38,7 +41,7 @@ export default function Home({ photos }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="container py-xxxl">
-        <div className="d-flex flex-col flex-md-row justify-content-between flex-gap-md">
+        <div className="d-flex flex-col flex-md-row justify-content-between gap-md">
           <div className="bg-midnight p-xl flex-1">
             <p className="text-xs">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed

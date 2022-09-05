@@ -4,19 +4,27 @@ import {
   getMonth,
   getYear,
   startOfMonth,
+  lastDayOfMonth,
   format,
   isAfter,
-  isBefore
+  isBefore,
+  isSameDay,
+  isFirstDayOfMonth,
+  isLastDayOfMonth,
+  isSunday,
+  isSaturday
 } from 'date-fns'
 import { useBemify } from '../hooks/useBemify'
 import { conditionalClasses } from '../utils/helpers'
 import { days, monthsShort, years } from '../utils/calendarUtils'
 
+// **************** HELPERS **************** //
 const formatCalendarDate = (
-  m: number,
+  m: string | number,
   d: string | number,
   y: string | number
-): string => `${m + 1}-${d}-${y}`
+): string => `${(typeof m === 'string' ? parseInt(m) : m) + 1}-${d}-${y}`
+// ******************************************* //
 
 export const CalendarComponent = () => {
   const [isStart, setIsStart] = useState(true)
@@ -36,13 +44,15 @@ export const CalendarComponent = () => {
 
   // ********* Handle Month State
   //  Month as number
-  const [currentMonthInView, setCurrentMonthInView] = useState(
+  const [currentMonthNumber, setCurrentMonthNumber] = useState(
     getMonth(new Date())
   )
   // Month as name
   const [currentMonthName, setCurrentMonthName] = useState(undefined)
   // First Day of Month
   const [firstDayOfMonthIndex, setFirstDayOfMonthIndex] = useState(undefined)
+  // End of Month slots
+  const [endOfMonthLength, setEndOfMonthLength] = useState(undefined)
 
   // ********* Handle Days State
   // Number of days in month
@@ -56,24 +66,24 @@ export const CalendarComponent = () => {
   // Update current month in view amd Year index as needed
   useEffect(() => {
     // Cycle months
-    if (currentMonthInView > 11) {
-      setCurrentMonthInView(0)
+    if (currentMonthNumber > 11) {
+      setCurrentMonthNumber(0)
       setYearIndex(prevState => prevState + 1)
     }
-    if (currentMonthInView < 0) {
-      setCurrentMonthInView(11)
+    if (currentMonthNumber < 0) {
+      setCurrentMonthNumber(11)
       setYearIndex(prevState => prevState - 1)
     }
 
     // Set Days In Month
     setNumberOfDaysInMonth(
-      getDaysInMonth(new Date(yearNumber, currentMonthInView))
+      getDaysInMonth(new Date(yearNumber, currentMonthNumber))
     )
 
     // Set First Day of Month
     // Get Formated Day Name
     const startOfMonthName = format(
-      startOfMonth(new Date(yearNumber, currentMonthInView)),
+      startOfMonth(new Date(yearNumber, currentMonthNumber)),
       'EEE'
     )
     // Get Index of Day
@@ -81,9 +91,19 @@ export const CalendarComponent = () => {
     // Set day Index
     setFirstDayOfMonthIndex(startOfMonthIndex)
 
+    // Set Last Day of Month
+    const lastDayOfMonthName = format(
+      lastDayOfMonth(new Date(yearNumber, currentMonthNumber)),
+      'EEE'
+    )
+
+    const lastDayOfMonthIndex = days.indexOf(lastDayOfMonthName)
+    const endOfMonthSlots = days.length - lastDayOfMonthIndex - 1
+    setEndOfMonthLength(endOfMonthSlots)
+
     // Set Current Month Name
-    setCurrentMonthName(monthsShort[currentMonthInView])
-  }, [currentMonthInView, yearNumber])
+    setCurrentMonthName(monthsShort[currentMonthNumber])
+  }, [currentMonthNumber, yearNumber])
 
   useEffect(() => {
     if (startDay && isStart) setIsStart(false)
@@ -107,9 +127,13 @@ export const CalendarComponent = () => {
       className={bem()}
       style={
         {
+          '--calender-start-of-month-length': firstDayOfMonthIndex,
+          '--calender-end-of-month-length': endOfMonthLength,
           '--calendar-selected-width':
             (startDay && endDay) ||
-            (startDay && endDayHovered && endDayHovered > startDay)
+            (startDay &&
+              endDayHovered &&
+              isAfter(new Date(endDayHovered), new Date(startDay)))
               ? '50%'
               : '0%'
         } as React.CSSProperties
@@ -135,117 +159,158 @@ export const CalendarComponent = () => {
       </section>
 
       <section className={bem('calendar-wrapper')}>
-        <div className={bem('header')}>
-          {/* Arrow */}
-          <div
-            className={bem('arrow-left') + ' ' + bem('arrow')}
-            onClick={() => setCurrentMonthInView(prevState => prevState - 1)}
-          ></div>
-          {/* Wrap month and year */}
-          <div className={bem('month-year-wrapper')}>
-            <div className={bem('month')}>
-              <h5>{currentMonthName}</h5>
+        <div className={bem('calendar-container')}>
+          <div className={bem('header')}>
+            {/* Arrow */}
+            <div
+              className={bem('arrow-left') + ' ' + bem('arrow')}
+              onClick={() => setCurrentMonthNumber(prevState => prevState - 1)}
+            ></div>
+            {/* Wrap month and year */}
+            <div className={bem('month-year-wrapper')}>
+              <div className={bem('month')}>
+                <h5>{currentMonthName}</h5>
+              </div>
+              <div className={bem('year')}>
+                <h5>{yearNumber}</h5>
+              </div>
             </div>
-            <div className={bem('year')}>
-              <h5>{yearNumber}</h5>
-            </div>
+            {/* Arrow */}
+            <div
+              className={bem('arrow-right') + ' ' + bem('arrow')}
+              onClick={() => setCurrentMonthNumber(prevState => prevState + 1)}
+            ></div>
           </div>
-          {/* Arrow */}
-          <div
-            className={bem('arrow-right') + ' ' + bem('arrow')}
-            onClick={() => setCurrentMonthInView(prevState => prevState + 1)}
-          ></div>
-        </div>
-        <div className={bem('days')}>
-          {days.map((day, index) => (
-            <p className={bem('day-name')} key={day + index}>
-              {day}
-            </p>
-          ))}
-        </div>
-        <div className={bem('days-wrapper')}>
-          {numberOfDaysInMonth &&
-            [...Array(numberOfDaysInMonth + firstDayOfMonthIndex)].map(
-              (_, index, arr) => {
-                // Calculate day 1 of the month
-                const day = index + 1 - firstDayOfMonthIndex
-                const isDisabled = day < 1
+          <div className={bem('days')}>
+            {days.map((day, index) => (
+              <p className={bem('day-name')} key={day + index}>
+                {day}
+              </p>
+            ))}
+          </div>
+          <div className={bem('days-wrapper')}>
+            {numberOfDaysInMonth &&
+              [...Array(numberOfDaysInMonth + firstDayOfMonthIndex)].map(
+                (_, index) => {
+                  // Calculate day 1 of the month
+                  const day = index + 1 - firstDayOfMonthIndex
 
-                const isWeekedStart = index === 0 || index % 7 === 0
-                const isWeekedEnd = (index + 1) % 7 === 0
-                const isFirstDay = day === 1
-                const isLastDay = day === arr.length - firstDayOfMonthIndex
+                  // FORMATTED DATE
+                  const formattedDate = formatCalendarDate(
+                    currentMonthNumber,
+                    day,
+                    yearNumber
+                  )
+                  // FORMATTED DATE AS DATE
+                  const d = new Date(formattedDate)
 
-                const formatDate = formatCalendarDate(
-                  currentMonthInView,
-                  day,
-                  yearNumber
-                )
+                  const isDisabled = day < 1
 
-                const isStartDay = formatDate === startDay
-                const isEndDay = formatDate === endDay
-                const isSelected = isStartDay || isEndDay
+                  const isWeekedStart = isSaturday(d)
+                  const isWeekedEnd = isSunday(d)
 
-                const isInSelectedRange =
-                  startDay &&
-                  endDay &&
-                  isAfter(new Date(formatDate), new Date(startDay)) &&
-                  isBefore(new Date(formatDate), new Date(endDay))
+                  const isFirstDayOfM = isFirstDayOfMonth(d)
+                  const isLastDayOfM = isLastDayOfMonth(d)
 
-                const isInHoveredRange =
-                  startDay &&
-                  endDayHovered &&
-                  isAfter(new Date(formatDate), new Date(startDay)) &&
-                  isBefore(new Date(formatDate), new Date(endDayHovered))
+                  const isStartDay = formattedDate === startDay
+                  const isEndDay = formattedDate === endDay
+                  const isSelected = isStartDay || isEndDay
+                  const startEndAreSame =
+                    formattedDate == endDay && formattedDate === startDay
 
-                const dayClasses = [
-                  [isDisabled, 'is-disabled'],
-                  [isSelected, 'selected'],
-                  [isStartDay, 'selected-start-day'],
-                  [isEndDay, 'selected-end-day'],
-                  [isInSelectedRange, 'in-selected-range'],
-                  [isInHoveredRange, 'in-selected-range'], // TODO Update Hover Style
-                  [isFirstDay, bem('day--month-start')],
-                  [isLastDay, bem('day--month-end')],
-                  [
-                    // TODO Update Bemify for allowing array of strings
-                    isWeekedStart,
-                    bem('day--weekend') + ' ' + bem('day--weekend-start')
-                  ],
-                  [
-                    isWeekedEnd,
-                    bem('day--weekend') + ' ' + bem('day--weekend-end')
+                  const daysAreSelected = startDay && endDay
+
+                  const isInSelectedRange =
+                    startDay &&
+                    endDay &&
+                    isAfter(d, new Date(startDay)) &&
+                    isBefore(d, new Date(endDay))
+
+                  const isInHoveredRange =
+                    startDay &&
+                    endDayHovered &&
+                    isAfter(d, new Date(startDay)) &&
+                    isBefore(d, new Date(endDayHovered)) &&
+                    !endDay
+
+                  const hasSelectedBeforeFirst =
+                    isFirstDayOfM &&
+                    isAfter(d, new Date(startDay)) &&
+                    (isBefore(d, new Date(endDay)) ||
+                      isSameDay(d, new Date(endDay)))
+
+                  const hasSelectedAfterLast =
+                    isLastDayOfM &&
+                    isBefore(d, new Date(endDay)) &&
+                    (isAfter(d, new Date(startDay)) ||
+                      isSameDay(d, new Date(startDay)))
+
+                  const isHoveredEndDateWeekendEnd =
+                    endDayHovered &&
+                    formattedDate === endDayHovered &&
+                    isSunday(new Date(endDayHovered))
+
+                  const endDateIsHovered = !!endDayHovered
+
+                  const dayClasses = [
+                    [isDisabled, 'is-disabled'],
+                    [isSelected, 'selected'],
+                    [isStartDay, 'selected-start-day'],
+                    [isEndDay, 'selected-end-day'],
+                    [startEndAreSame, 'selected-days-are-same'],
+                    [daysAreSelected, 'days-are-selected'],
+                    [endDateIsHovered, 'end-date-is-hovered'],
+                    [isInSelectedRange, 'in-selected-range'],
+                    [isInHoveredRange, 'in-selected-range'], // TODO Update Hover Style
+                    [isHoveredEndDateWeekendEnd, 'hovered-end-weekend-end'],
+                    [isFirstDayOfM, bem('day--month-start')],
+                    [hasSelectedBeforeFirst, 'selected-before'],
+                    [hasSelectedAfterLast, 'selected-after'],
+                    [isLastDayOfM, bem('day--month-end')],
+                    [
+                      isWeekedStart,
+                      `${bem('day--weekend')} ${bem('day--weekend--start')}`
+                    ],
+                    [
+                      isWeekedEnd,
+                      `${bem('day--weekend')} ${bem('day--weekend--end')}`
+                    ]
                   ]
-                ]
 
-                return (
-                  <div
-                    key={index}
-                    className={`${bem('day-wrapper')} ${conditionalClasses([
-                      isDisabled,
-                      'is-disabled'
-                    ])}`}
-                  >
-                    <p
-                      className={`${bem('day')} ${conditionalClasses(
-                        ...dayClasses
-                      )}`}
-                      onMouseOver={() =>
-                        !isStart && setEndDayHovered(formatDate)
-                      }
-                      onMouseOut={() => !isStart && setEndDayHovered(undefined)}
-                      onClick={() =>
-                        isStart
-                          ? setStartDay(() => formatDate)
-                          : setEndDay(() => formatDate)
-                      }
+                  const handleMouseOver = () =>
+                    !isStart && setEndDayHovered(formattedDate)
+
+                  const handleMouseOut = () =>
+                    !isStart && setEndDayHovered(undefined)
+
+                  const handleClick = () =>
+                    isStart
+                      ? setStartDay(() => formattedDate)
+                      : setEndDay(() => formattedDate)
+
+                  return (
+                    <div
+                      key={index}
+                      className={`${bem('day-wrapper')} ${conditionalClasses([
+                        isDisabled,
+                        'is-disabled'
+                      ])}`}
                     >
-                      {day > 0 ? day : ''}
-                    </p>
-                  </div>
-                )
-              }
-            )}
+                      <p
+                        className={`${bem('day')} ${conditionalClasses(
+                          ...dayClasses
+                        )}`}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                        onClick={handleClick}
+                      >
+                        {!isDisabled ? day : ''}
+                      </p>
+                    </div>
+                  )
+                }
+              )}
+          </div>
         </div>
       </section>
     </div>
