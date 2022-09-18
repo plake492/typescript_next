@@ -17,7 +17,6 @@
 
   --line-height-ratio: #{$line-height-ratio};
   --line-height-ratio-headers: #{$line-height-ratio-headers};
-  --text-color: #{$text-main};
   --base-font-weight: 400;
   --base-header-font-weight: 600;
   --base-line-height: calc(var(--base-font-size) * var(--line-height-ratio));
@@ -146,6 +145,8 @@ blockquote {
 }
 
 ul {
+  margin-bottom: var(--base-text-margin-bottom);
+
   li {
     > :not(a):not(ul) {
       position: relative;
@@ -165,12 +166,17 @@ ul {
 ol {
   list-style: decimal;
   margin-left: $space-md;
+  margin-bottom: var(--base-text-margin-bottom);
 
   li {
     & > ol {
       margin-left: $space-md;
     }
   }
+}
+
+li {
+  color: var(--text-color);
 }
 
 u {

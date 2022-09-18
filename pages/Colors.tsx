@@ -103,7 +103,7 @@ const Colors: React.FC = (): JSX.Element => {
               className={`${color.replace(
                 '--',
                 ''
-              )} card mb-none w-min-100 py-md px-md`}
+              )}  mb-none w-min-100 py-md px-md`}
             >
               <p className="small">{color}</p>
             </div>
@@ -118,10 +118,7 @@ const Colors: React.FC = (): JSX.Element => {
           {analgColors?.map((color: string, index: number) => (
             <div
               key={color + index}
-              className={`${color.replace(
-                '--',
-                ''
-              )} card w-min-100 py-md px-md`}
+              className={`${color.replace('--', '')}  w-min-100 py-md px-md`}
             >
               <p className="small">{color}</p>
             </div>
@@ -136,10 +133,7 @@ const Colors: React.FC = (): JSX.Element => {
           {monoColors?.map((color: string, index: number) => (
             <div
               key={color + index}
-              className={`${color.replace(
-                '--',
-                ''
-              )} card w-min-100 py-md px-md`}
+              className={`${color.replace('--', '')}  w-min-100 py-md px-md`}
             >
               <p className="small">{color}</p>
             </div>

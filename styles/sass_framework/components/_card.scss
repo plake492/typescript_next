@@ -1,28 +1,27 @@
 .card {
-  --card-width: calc(
-    (100% / var(--card-divider, 3)) - (var(--gap-offset) / 0.5)
-  );
+  // --card-width: calc(
+  //   (100% / var(--card-divider, 3)) - (var(--gap-offset) / 0.5)
+  // );
   --card-border: #{$border-radius};
   --card-border-width: #{$border-width};
   --card-border-color: #{$border-color};
   --card-offset-height: 0px;
   --card-display: inline-block;
-  --card-margin-botom: #{$space-xl};
+  --card-margin-botom: #{$space-md};
 
   border: var(--card-border-width) var(--card-border-color) solid;
   border-radius: var(--card-border);
-  max-width: var(--card-width);
+  // max-width: var(--card-width);
   width: 100%;
   display: var(--card-display);
   overflow: hidden;
   margin-bottom: var(--card-margin-botom);
 
-  @extend .bg-slate-grey;
+  @extend .bg-secondary;
 
   &__header {
-    padding: $space-md $space-xl;
-
-    @extend .bg-slate-grey-10;
+    @extend .bg-accent;
+    padding: $space-md $space-lg;
     border-bottom: var(--card-border-color) var(--card-border-width) solid;
   }
 
@@ -43,11 +42,10 @@
   }
 
   &__footer {
-    @extend .bg-slate-grey-10;
-    @extend .text-xs;
-
+    @extend .text-sm;
+    @extend .bg-secondary-alt;
     border-bottom: var(--card-border-color) var(--card-border-width) solid;
-    padding: $space-md $space-xl;
+    padding: $space-md $space-lg;
   }
 
   &--no-border {

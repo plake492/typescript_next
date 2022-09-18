@@ -19,7 +19,7 @@
 /* Set default root colors*/
 :root {
   --bg-color: #{$bg-primary};
-  --text-color: #{$text-main};
+  --text-color: #{get-contrasted-text($bg-primary)};
 }
 
 @each $key, $value in $target-colors {

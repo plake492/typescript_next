@@ -80,6 +80,7 @@ $space-xxxl: $base-spacing * 8;
 
 $spacers: (
   none: $space-none,
+  xs: $space-xs,
   sm: $space-sm,
   md: $space-md,
   lg: $space-lg,
@@ -140,12 +141,48 @@ $dark-mauve: #161616;
 $pale-purple: #59405c;
 $red-rocks: #87556f;
 $rock: #62635e;
-$green: #008000;
-$bob: hsl(0, 100%, 50%);
+$green: #00ff00;
 
 $text-main: $white;
 $bg-primary: #33333d;
 $bg-secondary: #27272e;
+
+// **************************************************
+// **************** colors THEMING ******************
+// **************************************************
+
+/* SCSS HEX */
+$gainsboro: #d8dbe2ff;
+$fire-opal: #ee6055ff;
+$pacific-blue: #37b7cbff;
+$majorelle-blue: #5b53f5ff;
+$charcoal: #373f51ff;
+$eerie-black: #1b1b1eff;
+
+$gradient-right: linear-gradient(
+  90deg,
+  #d8dbe2ff,
+  #37b7cbff,
+  #373f51ff,
+  #1b1b1eff
+);
+
+$bg-primary: $gainsboro;
+$bg-secondary: $charcoal;
+$bg-accent: $pacific-blue;
+// TODO Figure out how to name colors
+$bg-secondary-alt: $eerie-black;
+$bg-dark: $eerie-black;
+$bg-alt: $majorelle-blue;
+
+$bg-colors: (
+  bg-primary: $bg-primary,
+  bg-secondary: $bg-secondary,
+  bg-accent: $bg-accent,
+  bg-secondary-alt: $bg-secondary-alt,
+  bg-dark: $bg-dark,
+  bg-alt: $bg-alt
+);
 
 // **************************************************
 // ************* Colors with Hues *******************

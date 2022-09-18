@@ -1,4 +1,3 @@
-import { Card } from '../components/Card'
 import { CodeSnip } from '../components/CodeSnip'
 import { Hero } from '../components/Hero'
 import { ImageComponent } from '../components/ImageComponent'

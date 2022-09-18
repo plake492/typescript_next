@@ -21,8 +21,10 @@ export const Nav: React.FC = (): JSX.Element => {
     { path: '/', title: 'Home' },
     { path: '/Typography', title: 'Typography' },
     { path: '/Flex', title: 'Flex' },
+    { path: '/Spacing', title: 'Spacing' },
     { path: '/Cards', title: 'Cards' },
     { path: '/Colors', title: 'Colors' },
+    { path: '/ColorsTheme', title: 'ColorsTheme' },
     { path: '/Images', title: 'Images' },
     { path: '/Inputs', title: 'Inputs' },
     { path: '/Calendar', title: 'Calendar' }
@@ -93,7 +95,7 @@ export const NavLinks: React.FC<NavLinkProps> = ({
   setShowDropdown,
   pathname
 }: NavLinkProps): JSX.Element => (
-  <ul className="d-flex gap-md justify-content-flex-end align-items-flex-end flex-col flex-md-row gap-none gap-md-md gap-lg-xl">
+  <ul className="d-flex gap-md justify-content-flex-end align-items-flex-end flex-col flex-md-row gap-none gap-md-md gap-lg-lg">
     {routes?.map(
       ({ path, title }: Routes, index: number): JSX.Element => (
         <li key={path + index} onClick={() => setShowDropdown(false)}>

@@ -1,0 +1,14 @@
+:root {
+  @each $key, $value in $bg-colors {
+    --#{$key}: #{$value};
+  }
+}
+
+@each $key, $value in $bg-colors {
+  .#{$key} {
+    --bg-color: #{$value};
+    --text-color: #{get-contrasted-text($value)};
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+}

@@ -30,13 +30,7 @@ export const Card: React.FC<Card> = ({
   const isBlock = block ? '--block' : ''
 
   return (
-    <div
-      className={
-        bem([bg, `bg-${bg}`]) +
-        (noBorder ? +' ' + bem('--no-border') : '') +
-        (block ? ' ' + bem('--block') : ' ')
-      }
-    >
+    <div className="card">
       {header && <div className={bem('header')}>{header}</div>}
       {image && (
         <div

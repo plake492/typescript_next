@@ -104,6 +104,20 @@ export default function Home({ photos }) {
             }
           />
         </div>
+        <section className="py-xxl container">
+          <h4>How To Use</h4>
+          <p>Each util class is broken up into 3 sections</p>
+          <ol>
+            <li>Property Selector</li>
+            <li>Breakpoint (Optional)</li>
+            <li>Value</li>
+          </ol>
+          <p>EXAMPLE: .1[flex]-2[lg]-3[row-reverse]</p>
+          <p>
+            This will set the <i>Flex</i> property to <i>Row Reverse</i> at{' '}
+            <i>LG Breakpoint</i> and above
+          </p>
+        </section>
       </div>
     </main>
   )
