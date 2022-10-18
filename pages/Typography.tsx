@@ -19,24 +19,18 @@ const Typography: React.FC = (): JSX.Element => {
 
       <section className="container py-xl">
         <div className="py-xxl">
-          <h1 className="mb-md">
-            Selah 1{/* <CodeSnip codeString="<h1> h1" /> */}
-          </h1>
-          <h2 className="mb-md">
-            Clancy 2{/* <CodeSnip codeString="<h2> h2" /> */}
-          </h2>
-          <h3 className="mb-md">
-            Header 3{/* <CodeSnip codeString="<h3> h3" /> */}
-          </h3>
-          <h4 className="mb-md">
-            Header 4{/* <CodeSnip codeString="<h4> h4" /> */}
-          </h4>
-          <h5 className="mb-md">
-            Header 5{/* <CodeSnip codeString="<h5> h5" /> */}
-          </h5>
-          <h6 className="mb-md">
-            Header 6{/* <CodeSnip codeString="<h6> h6" /> */}
-          </h6>
+          <h1>Header 1</h1>
+          <CodeSnip codeString="<h1> h1" />
+          <h2>Header 2</h2>
+          <CodeSnip codeString="<h2> h2" />
+          <h3>Header 3</h3>
+          <CodeSnip codeString="<h3> h3" />
+          <h4>Header 4</h4>
+          <CodeSnip codeString="<h4> h4" />
+          <h5>Header 5</h5>
+          <CodeSnip codeString="<h5> h5" />
+          <h6>Header 6</h6>
+          <CodeSnip codeString="<h6> h6" />
         </div>
         <div className="mb-xl">
           <h5 className="mb-md">Large font</h5>
@@ -105,7 +99,7 @@ const Typography: React.FC = (): JSX.Element => {
           vel risus commodo viverra maecenas accumsan lacus.
         </p>
         <h5 className="mb-md">Extra Small font</h5>
-        <CodeSnip codeString="text-xm" />
+        <CodeSnip codeString="text-xs" />
         <p className="text-xs mt-md mb-xl border-top pt-md">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet
@@ -323,7 +317,7 @@ const Typography: React.FC = (): JSX.Element => {
       </section>
       <section className="bg-white">
         <div className="container py-xl">
-          <h4 className="mb-md">Unordered Lists</h4>
+          <h4 className="mb-md">Lists</h4>
           <div className="d-flex">
             <div className="w-50">
               <ul>
@@ -332,6 +326,9 @@ const Typography: React.FC = (): JSX.Element => {
                 </li>
                 <li>
                   <p>ipsum</p>
+                </li>
+                <li>
+                  <a className="link">link</a>
                 </li>
                 <li>
                   <ul>
@@ -344,7 +341,17 @@ const Typography: React.FC = (): JSX.Element => {
                     <li>
                       <ul>
                         <li>
-                          <p>Double Nested List</p>
+                          <p className="mb-none">Double Nested List</p>
+                          <ul>
+                            <li>
+                              <p className="mb-none">Tripple Nested List</p>
+                            </li>
+                            <li>
+                              <a className="mb-none link">
+                                Tripple Nested Link
+                              </a>
+                            </li>
+                          </ul>
                         </li>
                       </ul>
                     </li>
@@ -361,7 +368,7 @@ const Typography: React.FC = (): JSX.Element => {
                   <p>lorem</p>
                 </li>
                 <li>
-                  <a className="link">Link</a>
+                  <a>Link</a>
                 </li>
                 <li>
                   <ul>

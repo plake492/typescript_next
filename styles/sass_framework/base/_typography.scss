@@ -1,6 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+// Holder map for setting header font sizes
+$header-font-modifiers: ();
+
+// TODO Find more appropriate place for this.
+// Generate the
+@for $i from 1 through length($header-font-responsive-sizes) {
+  $key: nth($header-font-responsive-sizes, $i);
+  $map: (
+    $key: $header-font-modifier-base + $header-increase
+  );
+  $header-font-modifiers: map-merge($header-font-modifiers, $map);
+  // Increase the ratio for the next iteration
+  $header-increase: $header-breakpoint-increase * $i;
+}
+
 :root {
   // Create responsive text vars
   @include make-responsive-var(--text-xs-size, $font-xs-sizes);
@@ -20,7 +35,8 @@
   --base-font-weight: 400;
   --base-header-font-weight: 600;
   --base-line-height: calc(var(--base-font-size) * var(--line-height-ratio));
-  --base-text-margin-bottom: #{$space-md};
+  --base-text-margin-bottom: #{$base-text-margin-bottom};
+  --base-text-margin-top: #{$base-text-margin-top};
 
   --primary-font: #{$primary-font};
   --secondary-font: #{$secondary-font};
@@ -121,6 +137,10 @@ small,
     font-weight: var(--base-header-font-weight);
     color: var(--text-color);
     margin-bottom: var(--base-text-margin-bottom);
+
+    @if $headers-with-margin-top {
+      margin-top: var(--base-text-margin-top);
+    }
   }
 }
 

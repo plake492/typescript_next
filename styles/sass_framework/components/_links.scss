@@ -1,9 +1,14 @@
+a,
 .link {
   $line-width: 100%;
-
   --line-height: 1px;
   --line-width: #{$line-width};
-  --link-color: var(--text-color);
+
+  @if $links-have-text-color {
+    --link-color: var(--text-color);
+  } @else {
+    --link-color: #{$link-color};
+  }
 
   color: var(--link-color);
   text-decoration: none;
@@ -11,11 +16,22 @@
   transition: text-shadow 200ms ease-in-out;
   cursor: pointer;
 
-  &.nav-link:not(.link__active) {
-    --line-width: 0%;
+  // /*********************************************/
+  // /* For navigation links */
+  // /* Set color equal to text color */
+  // /*********************************************/
+  &.nav-link {
+    --link-color: var(--text-color);
 
-    &:hover {
-      --line-width: 100%;
+    &:not(.link__active) {
+      --line-width: 0%;
+
+      // Allow this to be toggled on or off (default is on)
+      @if $nav-link-underline {
+        &:hover {
+          --line-width: 100%;
+        }
+      }
     }
   }
 

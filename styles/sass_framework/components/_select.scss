@@ -16,7 +16,7 @@
 
   label {
     --label-border-color: var(--bg-lake-80);
-    @extend .bg-slate-grey;
+    // @extend .bg-slate-grey;
 
     color: var(--text-color);
     flex: 1;
@@ -44,7 +44,7 @@
     --label-border-color: var(--bg-lake-80);
     --select-arrow: #777;
 
-    @extend .bg-lake-80;
+    // @extend .bg-lake-80;
     appearance: none;
     width: 300px;
     flex: 1;

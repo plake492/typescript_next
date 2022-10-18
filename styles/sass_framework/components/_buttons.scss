@@ -1,24 +1,35 @@
-button:not(.btn) {
-  outline: none;
-  border: none;
-  background-color: inherit;
-}
-
-.btn {
-  --btn-color: var(--bg-color);
-  --btn-bg: var(--text-color);
-  --btn-border-color: var(--text-color);
+.btn,
+.btn--primary {
+  --btn-color: #{get-contrasted-text($btn-primary-bg)};
+  --btn-bg: #{$btn-primary-bg};
+  --btn-border-color: #{$btn-primary-bg};
   --btn-border-width: 1px;
   --btn-padding-buffer: 1px;
   --btn-padding-x: #{calc($space-md + var(--btn-padding-buffer))};
-  --btn-padding-y: #{calc(($space-sm + var(--btn-padding-buffer)) * 1.444)};
+  --btn-padding-y: #{calc(($space-sm + var(--btn-padding-buffer)) * 1.6)};
   --btn-margin-y: #{$space-md};
-  --btn-font-size: 2rem;
-  --btn-border-radius: #{$border-radius};
+  --btn-font-size: #{$btn-font-size};
+  --btn-border-radius: #{if(
+      $btn-is-pill,
+      $btn-border-radius-pill,
+      $btn-border-radius
+    )};
   --btn-max-width: 25rem;
+  --btn-width: 100%;
   --btn-scale: 1;
+  --btn-shadow-spread: 0;
+  --icon-color: #{if(
+      get-contrasted-text($btn-primary-bg, light, dark) == light,
+      brightness(0) invert(1),
+      brightness(0)
+    )};
+  --btn-max-height: 55px;
+  --btn-translate-x: 0px;
+  --btn-translate-y: 0px;
 
   cursor: pointer;
+  display: inline-block;
+  position: relative;
   color: var(--btn-color);
   background-color: var(--btn-bg);
   padding: var(--btn-padding-y) var(--btn-padding-x);
@@ -29,34 +40,132 @@ button:not(.btn) {
   border-style: solid;
   border-radius: var(--btn-border-radius);
   max-width: var(--btn-max-width);
-  width: 100%;
-  transform: scale(var(--btn-scale));
+  width: var(--btn-width);
+  height: fit-content;
+  max-height: var(--btn-max-height);
+  min-height: var(--btn-max-height);
+  transform: scale(var(--btn-scale))
+    translate(var(--btn-translate-x), var(--btn-translate-y));
   transition: background-color 200ms ease-in-out, color 200ms ease-in-out,
     border-width 200ms ease-in-out, transform 200ms ease-in-out,
-    padding 200ms ease-in-out;
+    padding 200ms ease-in-out, box-shadow 200ms ease-in, filter 200ms ease-in;
 
+  &:not(.btn--secondary):not(.btn--tertiary) {
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      box-shadow: inset -4px -5px 15px var(--btn-shadow-spread)
+          transparentize(darken($btn-primary-bg, 5%), 0.85),
+        inset 6px 6px 15px var(--btn-shadow-spread)
+          transparentize(lighten($btn-primary-bg, 8%), 0.85);
+    }
+  }
+
+  // Btn Hover
   &:hover {
-    --btn-border-width: 2px;
-    // Remove 1px from padding to compensate for the added border
-    --btn-padding-x: #{calc($space-md + var(--btn-padding-buffer) - 1px)};
-    --btn-padding-y: #{calc(
-        (($space-sm + var(--btn-padding-buffer)) * 1.444) - 1px
-      )};
+    &:not(.btn--tertiary) {
+      --btn-translate-x: -1px;
+      --btn-translate-y: -1px;
+
+      &:not(.btn--secondary):not(:empty) {
+        // Adjust the button inset shadow
+        --btn-shadow-spread: 1px;
+
+        box-shadow: 3px 3px 5px 0px
+          transparentize(lighten($btn-primary-bg, 5%), 0.66);
+      }
+    }
   }
 
   &:active {
-    --btn-scale: 0.98;
+    &:not(.btn--tertiary) {
+      --btn-translate-x: 0px;
+      --btn-translate-y: 0px;
+
+      &:not(.btn--secondary):not(:empty) {
+        box-shadow: 1px 1px 10px 0px
+          transparentize(lighten($btn-primary-bg, 2.5%), 0.75);
+      }
+    }
+  }
+
+  &--icon {
+    --order: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: $space-md;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      position: relative;
+      top: 50%;
+      left: 0;
+      // background: var(--icon) no-repeat;
+      // background-size: cover;
+      // filter: var(--icon-color);
+      mask: var(--icon) no-repeat;
+      mask-size: cover;
+
+      background-color: var(--btn-color);
+      width: calc(var(--btn-font-size) * 1.5);
+      height: calc(var(--btn-font-size) * 1.5);
+      order: var(--order);
+    }
+  }
+
+  &--icon-right {
+    --order: 1;
+  }
+
+  &.icon--arrow-right {
+    --order: 1;
   }
 
   // * Button Variations* //
-
-  &--no-bg {
+  &--secondary {
     --btn-color: var(--text-color);
     --btn-bg: var(--bg-color);
+    // Todo how to know if this should be dark or light?
+    --icon-color: brightness(0);
 
     &:hover {
-      --btn-color: var(--bg-color);
       --btn-bg: var(--text-color);
+      --btn-border-color: var(--text-color);
+      --btn-color: var(--bg-color);
+    }
+  }
+
+  &--tertiary {
+    --btn-color: var(--text-color);
+    --btn-bg: var(--bg-color);
+    --btn-border-color: var(--bg-color);
+    // Todo how to know if this should be dark or light?
+    --icon-color: brightness(0);
+
+    @if $btn-tertiary-has-underline {
+      @extend .link;
+      @extend .nav-link;
+    }
+  }
+
+  &:empty,
+  &--icon-only {
+    --btn-padding-x: var(--btn-padding-y);
+    --btn-width: fit-content;
+    @if $btn-is-pill {
+      --btn-border-radius: 50%;
+    }
+
+    &:hover:not(.btn--secondary) {
+      box-shadow: 2px 2px 10px 0px
+        transparentize(lighten($btn-primary-bg, 2.5%), 0.66);
     }
   }
 
@@ -64,3 +173,38 @@ button:not(.btn) {
     --btn-max-width: 100%;
   }
 }
+
+// .super-button {
+//   --border-color: var(--bg-primary);
+//   background-color: var(--bg-primary);
+//   color: var(--text-color);
+//   cursor: pointer;
+//   min-width: 125px;
+//   padding: $space-md;
+//   min-height: 55px;
+//   font-size: 20px;
+//   line-height: calc(20px * 1.5);
+//   border: 4px solid var(--border-color);
+//   border-radius: 9999px;
+//   transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out,
+//     border-color 200ms ease-in-out, transform 200ms ease-in-out;
+//   box-shadow: -5px -5px 10px rgb(235, 237, 243, 0.6),
+//     5px 5px 10px rgb(0, 0, 0, 0.25);
+
+//   &:hover {
+//     --border-color: rgb(235, 237, 243, 0.6);
+
+//     box-shadow: -8px -8px 10px rgb(235, 237, 243, 0.6),
+//       8px 8px 10px rgb(0, 0, 0, 0.25);
+
+//     transform: scale(1.02);
+//   }
+
+//   &:active {
+//     color: $fire-opal;
+//     box-shadow: -1px -1px 10px rgb(235, 237, 243, 0.6),
+//       1px 1px 10px rgb(0, 0, 0, 0.25),
+//       inset -2px -2px 10px rgb(235, 237, 243, 0.6),
+//       inset 2px 2px 10px rgb(0, 0, 0, 0.25);
+//   }
+// }

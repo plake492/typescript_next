@@ -1,0 +1,41 @@
+.icon {
+  &--mail {
+    --icon: url('/icons/mail.svg');
+  }
+
+  &--hamburger-menu {
+    --icon: url('/icons/hamburger-menu.svg');
+  }
+
+  &--github {
+    --icon: url('/icons/github.svg');
+  }
+
+  &--success {
+    --icon: url('/icons/circle-checkmark.svg');
+  }
+
+  &--error {
+    --icon: url('/icons/circle-x.svg');
+  }
+
+  &--loading {
+    --icon: url('/icons/loading.gif');
+  }
+
+  &--download {
+    --icon: url('/icons/download.svg');
+  }
+
+  &--plus {
+    --icon: url('/icons/plus.svg');
+  }
+
+  &--sliders {
+    --icon: url('/icons/sliders.svg');
+  }
+
+  &--arrow-right {
+    --icon: url('/icons/arrow-right.svg');
+  }
+}

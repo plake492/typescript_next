@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import Button from '../components/Button'
+import { SectionContainer } from '../components/SectionContainer'
+import { conditionalClasses } from '../utils/helpers'
 
 const validateInput = (value: string): boolean => !!value.length
 
-const Inputs: React.FC = (): JSX.Element => {
+export default function Inputs(): JSX.Element {
   const [text, setText] = useState('')
   const [textIsValid, setTextIsValid] = useState(false)
   const [textIsTouched, setTextIsTouched] = useState(false)
@@ -12,9 +15,24 @@ const Inputs: React.FC = (): JSX.Element => {
     setTextIsValid(isValid)
   }, [text])
 
+  const testError = async (err = true) =>
+    await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (err) reject('Error State')
+        else resolve('success')
+      }, 2000)
+    })
+
+  const getGithub = async () => {
+    const res = await fetch('https://api.github.com/users/plake492/repos')
+    const data = await res.json()
+    console.log('data==>>', data)
+    return data
+  }
+
   return (
-    <div>
-      <div className="container">
+    <main>
+      <SectionContainer title="Inputs" bgColor="bg-violet">
         <div className="input mb-xxl">
           <label>Testing</label>
           <input
@@ -26,11 +44,41 @@ const Inputs: React.FC = (): JSX.Element => {
             onBlur={(): void => setTextIsTouched(true)}
           />
         </div>
-        <h5>{text}</h5>
-        {!textIsValid && textIsTouched && <h1>ERROR!</h1>}
-      </div>
-    </div>
+      </SectionContainer>
+      <SectionContainer title="Buttons" bgColor="bg-white">
+        <div className="d-flex gap-col-md flex-wrap">
+          <Button text="Button" />
+          <Button text="Secondary" btnType="secondary" />
+          <Button text="Tertiary" btnType="tertiary" icon="arrow-right" />
+          <Button icon="mail" />
+          <Button icon="sliders" btnType="secondary" />
+        </div>
+      </SectionContainer>
+      <SectionContainer title="Buttons" bgColor="bg-slate-grey-30">
+        <div className="d-flex gap-col-md flex-wrap">
+          <Button text="Button" onClick={() => testError(false)} />
+          <Button text="Secondary" onClick={testError} btnType="secondary" />
+          <Button text="Tertiary" btnType="tertiary" icon="arrow-right" />
+          <Button text="Button" block />
+          <Button text="Secondary" btnType="secondary" block />
+          <Button icon="mail" text="Error Test" onClick={testError} />
+          <Button
+            text="Get Repos"
+            icon="github"
+            btnType="secondary"
+            onClick={() => testError(false)}
+            clearActionState
+            iconOnRight
+          />
+          <Button
+            onClick={() => testError(false)}
+            icon="sliders"
+            btnType="secondary"
+          />
+          <Button icon="plus" />
+          <Button icon="hamburger-menu" btnType="secondary" />
+        </div>
+      </SectionContainer>
+    </main>
   )
 }
-
-export default Inputs

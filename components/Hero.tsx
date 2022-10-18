@@ -1,8 +1,8 @@
 import { conditionalClasses } from '../utils/helpers'
 
 interface HeroProps {
-  children: JSX.Element
-  content?: JSX.Element
+  children: React.ReactNode
+  content?: React.ReactNode
   hasAngle?: boolean
   contentIsCentered?: boolean
 }

@@ -80,6 +80,7 @@ export const conditionalClasses = (
       ]): string => (condition ? style : fallback || '')
     )
     .join(' ')
+    .trim()
 
 /**
  * A helper function to extract the exact width and height from an image

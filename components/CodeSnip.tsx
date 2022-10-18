@@ -18,7 +18,7 @@ export const CodeSnip: React.FC<CodeString> = ({
   }, [showIsCopied])
 
   return (
-    <code className="d-flex justify-content-between">
+    <code className="d-flex justify-content-between bg-black-40 box-shadow">
       <div className="d-flex">
         {codeString.split(' ').map(
           (item, index, arr): JSX.Element => (

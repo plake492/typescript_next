@@ -144,7 +144,7 @@ MIXINS
 
   // Top Input Header
   &__input-wrapper {
-    @extend .bg-slate-grey;
+    // @extend .bg-slate-grey;
     width: 100%;
     height: var(--calendar-input-height);
     padding: $space-md;
@@ -157,7 +157,7 @@ MIXINS
     height: var(--calendar-calendar-height);
     width: 100%;
 
-    @extend .bg-lake; // TODO Update Colors
+    // @extend .bg-lake; // TODO Update Colors
     padding-top: var(--calendar-calendar-padding-top);
     padding-bottom: var(--calendar-calendar-padding-bottom);
     padding-left: var(--calendar-calendar-padding-left);

@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 // Responsive Sizes
 $screen-sm-min: 400px;
 $screen-md-min: 600px;
@@ -10,59 +12,6 @@ $breakpoints: (
   lg: $screen-lg-min,
   xl: $screen-xl-min
 );
-
-// **************************************************
-// ******************** Fonts ***********************
-// **************************************************
-
-$primary-font: 'Heebo', sans-serif;
-$secondary-font: 'Orbitron', sans-serif;
-
-$font-weights: (100, 200, 300, 400, 500, 600, 700, 800, 900);
-
-// /**************************************************/
-// /* Responsive fonts */
-// /**************************************************/
-
-// ratio to update the header font / line-height sizes
-$header-font-modifiers: (
-  sm: 0.6,
-  md: 0.65,
-  lg: 0.7,
-  xl: 0.75
-);
-
-$font-xs-sizes: (
-  md: 1.4rem,
-  lg: 1.6rem
-);
-
-$font-sm-sizes: (
-  md: 1.6rem,
-  lg: 1.8rem
-);
-
-$font-base-sizes: (
-  md: 1.8rem,
-  lg: 2rem
-);
-
-$font-lg-sizes: (
-  md: 2rem,
-  lg: 2.2rem
-);
-
-$headers: ('6', '5', '4', '3', '2', '1');
-
-$font-size-standard: 2rem;
-
-// /**************************************************/
-// /* Line Height Ratios */
-// /**************************************************/
-$line-height-ratio: 1.6;
-
-// This values will affect the Header font-sizes
-$line-height-ratio-headers: 1.2;
 
 // **************************************************
 // ******************** Spacing *********************
@@ -117,6 +66,67 @@ $combinationDirections: (
 $allDirections: ('left', 'right', 'top', 'bottom');
 
 // **************************************************
+// ******************** Fonts ***********************
+// **************************************************
+
+$primary-font: Arial, sans-serif;
+$secondary-font: Verdana, sans-serif;
+
+$font-weights: (100, 200, 300, 400, 500, 600, 700, 800, 900);
+
+// /**************************************************/
+// /* Responsive fonts */
+// /**************************************************/
+
+// Determian which breakpoints update the Header sizes
+$header-font-responsive-sizes: (sm, md, lg, xl);
+
+// ratio to update the header font / line-height sizes
+// will be applied to the first item in $header-font-responsive-sizes
+$header-font-modifier-base: 0.6;
+
+// Amount to increase by for every proceeding item in $header-font-responsive-sizes
+$header-breakpoint-increase: 0.05;
+
+// Placeholder for changing header sizes by breakpoints
+$header-increase: 0;
+
+$font-xs-sizes: (
+  md: 1.4rem,
+  lg: 1.6rem
+);
+
+$font-sm-sizes: (
+  md: 1.6rem,
+  lg: 1.8rem
+);
+
+$font-base-sizes: (
+  md: 1.8rem,
+  lg: 2rem
+);
+
+$font-lg-sizes: (
+  md: 2rem,
+  lg: 2.2rem
+);
+
+$headers: ('6', '5', '4', '3', '2', '1');
+
+$font-size-standard: 2rem;
+
+// /**************************************************/
+// /* Line Height Ratios */
+// /**************************************************/
+$line-height-ratio: 1.6;
+
+// This values will affect the Header font-sizes
+$line-height-ratio-headers: 1.2;
+
+$base-text-margin-bottom: $space-md;
+$base-text-margin-top: $space-lg;
+
+// **************************************************
 // ******************** container *******************
 // **************************************************
 
@@ -131,28 +141,28 @@ $container-padding-large: $space-xl;
 
 $transparent: #00000000;
 $transparent-partial: #0000005e;
+
 $black: #000000;
 $white: #eeeeee;
+$red: #ff0000;
+$orange: #ffa500;
+$yellow: #ffff00;
+$green: #008000;
+$blue: #0000ff;
+$indigo: #4b0082;
 $violet: #473198;
+$purple: #800080;
+
 $midnight: #161032;
 $lake: #095256;
 $slate-grey: #0b0a17;
-$dark-mauve: #161616;
-$pale-purple: #59405c;
-$red-rocks: #87556f;
 $rock: #62635e;
-$green: #00ff00;
-
-$text-main: $white;
-$bg-primary: #33333d;
-$bg-secondary: #27272e;
 
 // **************************************************
 // **************** colors THEMING ******************
 // **************************************************
 
-/* SCSS HEX */
-$gainsboro: #d8dbe2ff;
+$gainsboro: #1a253f;
 $fire-opal: #ee6055ff;
 $pacific-blue: #37b7cbff;
 $majorelle-blue: #5b53f5ff;
@@ -167,38 +177,58 @@ $gradient-right: linear-gradient(
   #1b1b1eff
 );
 
+// /**************************************************/
+// /* Bg Vcolor vars */
+// /**************************************************/
+// TODO Figure out how to name colors
 $bg-primary: $gainsboro;
 $bg-secondary: $charcoal;
 $bg-accent: $pacific-blue;
-// TODO Figure out how to name colors
 $bg-secondary-alt: $eerie-black;
 $bg-dark: $eerie-black;
 $bg-alt: $majorelle-blue;
 
 $bg-colors: (
-  bg-primary: $bg-primary,
-  bg-secondary: $bg-secondary,
-  bg-accent: $bg-accent,
-  bg-secondary-alt: $bg-secondary-alt,
-  bg-dark: $bg-dark,
-  bg-alt: $bg-alt
+  primary: $bg-primary,
+  secondary: $bg-secondary,
+  accent: $bg-accent,
+  secondary-alt: $bg-secondary-alt,
+  dark: $bg-dark,
+  alt: $bg-alt
 );
+
+// /**************************************************/
+// /* Text colors */
+// /**************************************************/
+$text-light: rgb(238, 238, 238);
+$text-dark: rgb(0, 0, 0);
+$link-color: $bg-alt;
 
 // **************************************************
 // ************* Colors with Hues *******************
 // **************************************************
 
 $target-colors: (
+  black: $black,
+  white: $white,
+  red: $red,
+  orange: $orange,
+  yellow: $yellow,
   green: $green,
-  slate-grey: $slate-grey,
-  dark-mauve: $dark-mauve,
-  pale-purple: $pale-purple,
-  red-rocks: $red-rocks,
+  blue: $blue,
+  indigo: $indigo,
+  purple: $purple,
   violet: $violet,
   midnight: $midnight,
   lake: $lake,
-  white: $white
+  slate-grey: $slate-grey,
+  // dark-mauve: $dark-mauve,
+  // pale-purple: $pale-purple,
+  // red-rocks: $red-rocks,
+  rock: $rock
 );
+
+$target-colors: map.merge($bg-colors, $target-colors);
 
 $tones: 10, 20, 30, 40, 50, 60, 70, 80;
 
@@ -310,6 +340,9 @@ $order: (
   5: 5
 );
 
+// The first key equals the CSS prop to be targeted
+// The nested key will set the base class name
+// EX: .flex-row {flex-direction: row}
 $flex: (
   justify-content: (
     justify-content: $placements
@@ -334,6 +367,12 @@ $flex: (
   ),
   gap: (
     gap: $spacers
+  ),
+  column-gap: (
+    gap-col: $spacers
+  ),
+  row-gap: (
+    gap-row: $spacers
   ),
   flex-basis: (
     flex-basis: $flex-basis
@@ -401,7 +440,8 @@ $z-indecies: (
   600: 600,
   700: 700,
   800: 800,
-  900: 900
+  900: 900,
+  1000: 1000
 );
 
 $above-everyhting: 999999;
@@ -412,9 +452,51 @@ $above-everyhting: 999999;
 $text-alignment: (start, end, center, right, left);
 
 // **************************************************
+// **************** Buttoms *************************
+// **************************************************
+
+$btn-primary-bg: #3568f6;
+$btn-primary-bg: #3a14e6;
+$btn-primary-bg: #e96f0c;
+$btn-border-radius: 4px;
+$btn-border-radius-pill: 50px;
+$btn-font-size: 2rem;
+
+// **************************************************
 // ***************** Misc ***************************
 // **************************************************
 
-$list-item-icon: '\276F';
+// $list-item-icon: '\276F'; // Chevron Arrow
+// $list-item-icon: '\262F'; // Yin Yang
+// $list-item-icon: '\25E6'; // Black border bullet
+// $list-item-icon: '\26AC'; // Black border bullet (bigger)
+// $list-item-icon: '\25CF'; // Black dot
+// $list-item-icon: '\273A'; // Astrisk Special
+// $list-item-icon: '\002A'; // Astrisk
+// $list-item-icon: '\25AA'; // Bullet (square)
+$list-item-icon: '\2022'; // Bullet (circle)
 
 $underline-bottom: 0px;
+
+// **************************************************
+// ***************** SETTINGS ***********************
+// **************************************************
+// These settings allow the user to toggle on, off, or between settings
+
+// Headers container margin on top by default, set be $base-text-margin-top
+$headers-with-margin-top: true;
+
+// toggle on or off if headers should lose their margin top and bottom when flex aligned
+$headers-remove-margin-when-aligned: true;
+
+// Nav links have underline on hover
+$nav-link-underline: true;
+
+// True = links inherit text color | false = links ingerit $link-color
+$links-have-text-color: false;
+
+// Set Tertiary buttons to have udnerline on hover
+$btn-tertiary-has-underline: true;
+
+// Set border radius of btn's as pill or not
+$btn-is-pill: false;

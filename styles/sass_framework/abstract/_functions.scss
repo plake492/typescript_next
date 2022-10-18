@@ -8,7 +8,11 @@ Color brightness is determined by the following formula:
 ((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
 ------------------------*/
 
-@function get-contrasted-text($n) {
+@function get-contrasted-text(
+  $n,
+  $light-return: $text-light,
+  $dark-return: $text-dark
+) {
   $color-brightness: round(
     calc((red($n) * 299) + (green($n) * 587) + (blue($n) * 114) / 1000)
   );
@@ -20,9 +24,9 @@ Color brightness is determined by the following formula:
   );
 
   @if abs($color-brightness) < calc($light-color/2) {
-    @return #eeeeee;
+    @return $light-return;
   } @else {
-    @return #000000;
+    @return $dark-return;
   }
 }
 

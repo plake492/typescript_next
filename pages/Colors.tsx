@@ -49,7 +49,7 @@ const Colors: React.FC = (): JSX.Element => {
     'luminosity'
   ]
 
-  const img = 'landscape/mert-atakan-chc-oAL0gBU-unsplash.jpg'
+  const img = 'landscape/paul-earle-xJ2tjuUHD9M-unsplash.jpg'
 
   return (
     <>
@@ -96,7 +96,7 @@ const Colors: React.FC = (): JSX.Element => {
         <div className="pb-xl mb-xl border-bottom">
           <h3>Colors</h3>
         </div>
-        <div className="d-flex flex-wrap">
+        <div className="d-flex flex-wrap border">
           {colors?.map((color: string, index: number) => (
             <div
               key={color + index}
