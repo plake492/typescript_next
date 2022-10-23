@@ -31,6 +31,7 @@ export default function Button({
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
   const [btnIcon, setBtnIcon] = useState(icon)
+  const [textToShow, setTextToShow] = useState('')
 
   // Show and then clear success / error message on btn
   useEffect(() => {
@@ -46,6 +47,7 @@ export default function Button({
   }, [text, icon, clearActionState, success, error])
 
   useEffect(() => {
+    // Handle Icon
     if (icon && !success && !error) {
       setBtnIcon(icon)
     } else if (success) {
@@ -55,7 +57,16 @@ export default function Button({
     } else if (!icon && !success && !error && !loading) {
       setBtnIcon(null)
     }
-  }, [icon, success, error, loading])
+
+    // Handle Text
+    if (!!icon && text) {
+      setTextToShow(text)
+    } else if (!icon && text && (loading || success || error)) {
+      setTextToShow(' ')
+    } else {
+      setTextToShow(text)
+    }
+  }, [icon, success, error, loading, text])
 
   const handleClick = async (
     event: MouseEvent<HTMLButtonElement>
@@ -97,7 +108,9 @@ export default function Button({
           ? conditionalClasses([loading || success || error, 'icon'])
           : ''
       }
-      `.trim()}
+      `
+        .trim()
+        .replace(/ +/g, ' ')}
       type={type}
     >
       {loading ? (
@@ -113,11 +126,7 @@ export default function Button({
       ) : btnIcon ? (
         <SvgSymbol icon={btnIcon} viewBox="0 0 16 16" />
       ) : null}
-      {!!icon && text
-        ? text
-        : !icon && text && (loading || success || error)
-        ? ' '
-        : text}
+      {textToShow}
     </button>
   )
 }

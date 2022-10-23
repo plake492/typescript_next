@@ -121,14 +121,8 @@
   }
 }
 
-@mixin underline-psuedo-element() {
-  content: '';
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background-color: var(--link-color);
-  height: var(--line-height);
-  width: var(--line-width);
-  transition: width 200ms ease-in-out, transform 200ms ease-in-out;
+@mixin hover() {
+  @media (hover: hover) {
+    @content;
+  }
 }

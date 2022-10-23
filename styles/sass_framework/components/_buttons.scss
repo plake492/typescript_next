@@ -1,3 +1,9 @@
+button {
+  background-color: $transparent;
+  border: none;
+  outline: none;
+}
+
 .btn,
 .btn--primary {
   --btn-color: #{get-contrasted-text($btn-primary-bg)};
@@ -70,18 +76,20 @@
   }
 
   // Btn Hover
-  &:hover {
-    &:not(.btn--tertiary) {
-      --btn-translate-x: -1px;
-      --btn-translate-y: -1px;
+  @include hover() {
+    &:hover {
+      &:not(.btn--tertiary) {
+        --btn-translate-x: -1px;
+        --btn-translate-y: -1px;
 
-      &:not(.btn--secondary):not(:empty) {
-        // Adjust the button inset shadow
-        --btn-shadow-spread: 1px;
-        --btn-bg: #{lighten($btn-primary-bg, 6)};
+        &:not(.btn--secondary):not(:empty) {
+          // Adjust the button inset shadow
+          --btn-shadow-spread: 1px;
+          --btn-bg: #{lighten($btn-primary-bg, 6)};
 
-        box-shadow: 1px 1px 2px 0px
-          transparentize(lighten($btn-primary-bg, 5%), 0.5);
+          box-shadow: 1px 1px 2px 0px
+            transparentize(lighten($btn-primary-bg, 5%), 0.5);
+        }
       }
     }
   }
@@ -143,9 +151,11 @@
       --btn-border-radius: 50%;
     }
 
-    &:hover:not(.btn--secondary) {
-      box-shadow: 2px 2px 10px 0px
-        transparentize(lighten($btn-primary-bg, 2.5%), 0.66);
+    @include hover() {
+      &:hover:not(.btn--secondary) {
+        box-shadow: 2px 2px 10px 0px
+          transparentize(lighten($btn-primary-bg, 2.5%), 0.66);
+      }
     }
   }
 
@@ -159,10 +169,12 @@
     --btn-color: var(--text-color);
     --btn-bg: var(--bg-color);
 
-    &:hover {
-      --btn-bg: var(--text-color);
-      --btn-border-color: var(--text-color);
-      --btn-color: var(--bg-color);
+    @include hover() {
+      &:hover {
+        --btn-bg: var(--text-color);
+        --btn-border-color: var(--text-color);
+        --btn-color: var(--bg-color);
+      }
     }
   }
 
@@ -209,8 +221,10 @@
         transition: width 200ms ease-in-out, height 200ms ease-in-out;
       }
 
-      &:hover:not(:focus-visible) {
-        --line-width: 100%;
+      @include hover() {
+        &:hover:not(:focus-visible) {
+          --line-width: 100%;
+        }
       }
 
       &:active:not(:focus-visible) {
@@ -227,9 +241,11 @@
   &--block {
     --btn-max-width: 100%;
   }
+
+  &--clear {
+  }
 }
 
-//
 .super-button {
   --border-color: var(--bg-color);
 
