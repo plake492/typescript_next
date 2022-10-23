@@ -49,34 +49,42 @@ export default function Inputs(): JSX.Element {
         <div className="d-flex gap-col-md flex-wrap">
           <Button text="Button" />
           <Button text="Secondary" btnType="secondary" />
-          <Button text="Tertiary" btnType="tertiary" icon="arrow-right" />
-          <Button icon="mail" />
+          <Button
+            text="Tertiary"
+            btnType="tertiary"
+            iconOnRight
+            icon="arrow-right"
+          />
+          <Button icon="envelop" />
           <Button icon="sliders" btnType="secondary" />
         </div>
       </SectionContainer>
       <SectionContainer title="Buttons" bgColor="bg-slate-grey-30">
         <div className="d-flex gap-col-md flex-wrap">
-          <Button text="Button" onClick={() => testError(false)} />
+          <Button
+            text="Button"
+            icon="sliders"
+            onClick={() => testError(true)}
+          />
           <Button text="Secondary" onClick={testError} btnType="secondary" />
-          <Button text="Tertiary" btnType="tertiary" icon="arrow-right" />
+          <Button text="TERTIARY" btnType="tertiary" icon="arrow-right" />
           <Button text="Button" block />
           <Button text="Secondary" btnType="secondary" block />
-          <Button icon="mail" text="Error Test" onClick={testError} />
+          <Button icon="envelop" text="Error Test" onClick={testError} />
           <Button
             text="Get Repos"
             icon="github"
             btnType="secondary"
             onClick={() => testError(false)}
-            clearActionState
             iconOnRight
           />
-          <Button
+          {/* <Button
             onClick={() => testError(false)}
             icon="sliders"
             btnType="secondary"
           />
           <Button icon="plus" />
-          <Button icon="hamburger-menu" btnType="secondary" />
+          <Button icon="download" btnType="secondary" text="Download" /> */}
         </div>
       </SectionContainer>
     </main>

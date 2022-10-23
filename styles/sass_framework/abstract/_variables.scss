@@ -456,8 +456,9 @@ $text-alignment: (start, end, center, right, left);
 // **************************************************
 
 $btn-primary-bg: #3568f6;
-$btn-primary-bg: #3a14e6;
-$btn-primary-bg: #e96f0c;
+$btn-primary-bg: #1fd2fa;
+// $btn-primary-bg: #3a14e6;
+// $btn-primary-bg: #e96f0c;
 $btn-border-radius: 4px;
 $btn-border-radius-pill: 50px;
 $btn-font-size: 2rem;
@@ -497,6 +498,9 @@ $links-have-text-color: false;
 
 // Set Tertiary buttons to have udnerline on hover
 $btn-tertiary-has-underline: true;
+
+// Set any button without a border to be capitalzed
+$btn-none-border-text-is-caps: true;
 
 // Set border radius of btn's as pill or not
 $btn-is-pill: false;

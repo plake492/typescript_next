@@ -1,8 +1,10 @@
 a,
 .link {
   $line-width: 100%;
+
   --line-height: 1px;
   --line-width: #{$line-width};
+  --link-font-weight: var(--base-font-weight, 400);
 
   @if $links-have-text-color {
     --link-color: var(--text-color);
@@ -13,7 +15,7 @@ a,
   color: var(--link-color);
   text-decoration: none;
   position: relative;
-  transition: text-shadow 200ms ease-in-out;
+  font-weight: var(--link-font-weight);
   cursor: pointer;
 
   // /*********************************************/
@@ -32,6 +34,13 @@ a,
           --line-width: 100%;
         }
       }
+    }
+
+    &:focus {
+      outline: none;
+      --line-width: 100%;
+      --line-height: 2px;
+      // --link-font-weight: 700;
     }
   }
 

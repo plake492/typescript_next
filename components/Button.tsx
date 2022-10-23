@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef, MouseEvent } from 'react'
+import React, { useState, useEffect, MouseEvent } from 'react'
+import SvgSymbol from './SvgSymbol'
+import Image from 'next/image'
 import { conditionalClasses } from '../utils/helpers'
-import { CSSTransition, SwitchTransition } from 'react-transition-group'
 
 interface ButtonTypes {
   text?: string
@@ -15,11 +16,6 @@ interface ButtonTypes {
   clearActionState?: boolean
 }
 
-/**
- *
- * @param param0
- * @returns
- */
 export default function Button({
   text,
   btnType,
@@ -34,21 +30,32 @@ export default function Button({
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
-  const textRef = useRef()
+  const [btnIcon, setBtnIcon] = useState(icon)
 
-  const clearLoadingStates = () => {
-    setSuccess(false)
-    setError(false)
-  }
-
+  // Show and then clear success / error message on btn
   useEffect(() => {
     let id: ReturnType<typeof setTimeout>
 
     if ((text && !icon) || (clearActionState && (success || error)))
-      id = setTimeout(() => clearLoadingStates(), 2500)
+      id = setTimeout(() => {
+        setSuccess(false)
+        setError(false)
+      }, 2500)
 
     return () => clearTimeout(id)
   }, [text, icon, clearActionState, success, error])
+
+  useEffect(() => {
+    if (icon && !success && !error) {
+      setBtnIcon(icon)
+    } else if (success) {
+      setBtnIcon('circle-check')
+    } else if (error) {
+      setBtnIcon('circle-x')
+    } else if (!icon && !success && !error && !loading) {
+      setBtnIcon(null)
+    }
+  }, [icon, success, error, loading])
 
   const handleClick = async (
     event: MouseEvent<HTMLButtonElement>
@@ -74,45 +81,43 @@ export default function Button({
       onClick={!!onClick ? handleClick : null}
       className={`btn ${conditionalClasses(
         [!!btnType, `btn--${btnType}`],
-        [!!icon, `btn--icon icon--${icon}`],
+        [!!icon, 'btn--icon'],
         [block, `btn--block`],
         [!!icon && iconOnRight, 'btn--icon-right'],
+        [icon && !text, 'btn--icon-only'],
+        [error, 'btn--error'],
+        [success, 'btn--success'],
         [
           !icon && text && !removeActionState && (loading || success || error),
           'btn--icon'
         ]
-      )} ${
+      )} 
+      ${
         !removeActionState
-          ? conditionalClasses(
-              [loading || success || error, 'btn--icon'],
-              [loading, 'icon--loading'],
-              [success, 'icon--success'],
-              [error, 'icon--error']
-            )
+          ? conditionalClasses([loading || success || error, 'icon'])
           : ''
-      }`.trim()}
+      }
+      `.trim()}
       type={type}
     >
-      {/* <SwitchTransition mode="out-in">
-        <CSSTransition
-          key={loading || success || error}
-          nodeRef={textRef}
-          timeout={200}
-          classNames="transitions__page"
-          unmountOnExit
-          addEndListener={done => {
-            textRef.current.addEventListener('transitionend', done, false)
-          }}
-        >
-          <span ref={textRef}> */}
+      {loading ? (
+        <div className="icon">
+          <Image
+            src="/icons/loading.gif"
+            alt="loading animation"
+            layout="responsive"
+            height="100%"
+            width="100%"
+          />
+        </div>
+      ) : btnIcon ? (
+        <SvgSymbol icon={btnIcon} viewBox="0 0 16 16" />
+      ) : null}
       {!!icon && text
         ? text
         : !icon && text && (loading || success || error)
         ? ' '
         : text}
-      {/* </span>
-        </CSSTransition>
-      </SwitchTransition> */}
     </button>
   )
 }

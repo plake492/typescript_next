@@ -2,6 +2,7 @@
 .btn--primary {
   --btn-color: #{get-contrasted-text($btn-primary-bg)};
   --btn-bg: #{$btn-primary-bg};
+  --btn-icon-color: var(--btn-colo);
   --btn-border-color: #{$btn-primary-bg};
   --btn-border-width: 1px;
   --btn-padding-buffer: 1px;
@@ -9,6 +10,7 @@
   --btn-padding-y: #{calc(($space-sm + var(--btn-padding-buffer)) * 1.6)};
   --btn-margin-y: #{$space-md};
   --btn-font-size: #{$btn-font-size};
+  --btn--icon-size: calc(var(--btn-font-size) * 1.5);
   --btn-border-radius: #{if(
       $btn-is-pill,
       $btn-border-radius-pill,
@@ -18,14 +20,14 @@
   --btn-width: 100%;
   --btn-scale: 1;
   --btn-shadow-spread: 0;
-  --icon-color: #{if(
-      get-contrasted-text($btn-primary-bg, light, dark) == light,
-      brightness(0) invert(1),
-      brightness(0)
-    )};
   --btn-max-height: 55px;
   --btn-translate-x: 0px;
   --btn-translate-y: 0px;
+  --btn-action-color: #{if(
+      get-contrasted-text($btn-primary-bg, light, dark) == light,
+      darken($btn-primary-bg, 10%),
+      lighten($btn-primary-bg, 10%)
+    )};
 
   cursor: pointer;
   display: inline-block;
@@ -58,10 +60,12 @@
       height: 100%;
       top: 0;
       left: 0;
-      box-shadow: inset -4px -5px 15px var(--btn-shadow-spread)
-          transparentize(darken($btn-primary-bg, 5%), 0.85),
-        inset 6px 6px 15px var(--btn-shadow-spread)
-          transparentize(lighten($btn-primary-bg, 8%), 0.85);
+      border-radius: var(--btn-border-radius);
+      z-index: -1;
+      box-shadow: inset -4px -5px 8px var(--btn-shadow-spread)
+          transparentize(darken($btn-primary-bg, 10%), 0.5),
+        inset 6px 6px 6px var(--btn-shadow-spread)
+          transparentize(lighten($btn-primary-bg, 10%), 0.5);
     }
   }
 
@@ -74,9 +78,10 @@
       &:not(.btn--secondary):not(:empty) {
         // Adjust the button inset shadow
         --btn-shadow-spread: 1px;
+        --btn-bg: #{lighten($btn-primary-bg, 6)};
 
-        box-shadow: 3px 3px 5px 0px
-          transparentize(lighten($btn-primary-bg, 5%), 0.66);
+        box-shadow: 1px 1px 2px 0px
+          transparentize(lighten($btn-primary-bg, 5%), 0.5);
       }
     }
   }
@@ -87,12 +92,21 @@
       --btn-translate-y: 0px;
 
       &:not(.btn--secondary):not(:empty) {
-        box-shadow: 1px 1px 10px 0px
+        box-shadow: 0px 0px 4px 0px
           transparentize(lighten($btn-primary-bg, 2.5%), 0.75);
+        --btn-bg: var(--btn-action-color);
       }
     }
   }
 
+  &:focus-visible {
+    outline: 2px solid var(--btn-action-color);
+    filter: drop-shadow(2px 2px 6px var(--btn-action-color));
+  }
+
+  /*****************************/
+  /*********** ICONS ***********/
+  /*****************************/
   &--icon {
     --order: 0;
 
@@ -100,65 +114,31 @@
     align-items: center;
     justify-content: center;
     column-gap: $space-md;
+  }
 
-    &::before {
-      content: '';
-      display: inline-block;
-      position: relative;
-      top: 50%;
-      left: 0;
-      // background: var(--icon) no-repeat;
-      // background-size: cover;
-      // filter: var(--icon-color);
-      mask: var(--icon) no-repeat;
-      mask-size: cover;
+  .icon {
+    color: var(--btn-icon-color);
+    width: var(--btn--icon-size);
+    height: var(--btn--icon-size);
+    order: var(--order);
+  }
 
-      background-color: var(--btn-color);
-      width: calc(var(--btn-font-size) * 1.5);
-      height: calc(var(--btn-font-size) * 1.5);
-      order: var(--order);
-    }
+  &--success {
+    --btn-icon-color: var(--color-success, --text-color);
+  }
+
+  &--error {
+    --btn-icon-color: var(--color-error, --text-color);
   }
 
   &--icon-right {
     --order: 1;
   }
 
-  &.icon--arrow-right {
-    --order: 1;
-  }
-
-  // * Button Variations* //
-  &--secondary {
-    --btn-color: var(--text-color);
-    --btn-bg: var(--bg-color);
-    // Todo how to know if this should be dark or light?
-    --icon-color: brightness(0);
-
-    &:hover {
-      --btn-bg: var(--text-color);
-      --btn-border-color: var(--text-color);
-      --btn-color: var(--bg-color);
-    }
-  }
-
-  &--tertiary {
-    --btn-color: var(--text-color);
-    --btn-bg: var(--bg-color);
-    --btn-border-color: var(--bg-color);
-    // Todo how to know if this should be dark or light?
-    --icon-color: brightness(0);
-
-    @if $btn-tertiary-has-underline {
-      @extend .link;
-      @extend .nav-link;
-    }
-  }
-
-  &:empty,
   &--icon-only {
     --btn-padding-x: var(--btn-padding-y);
-    --btn-width: fit-content;
+    --btn-width: min-content;
+
     @if $btn-is-pill {
       --btn-border-radius: 50%;
     }
@@ -169,42 +149,124 @@
     }
   }
 
+  // /*********************************************/
+  // /* Variations */
+  // /*********************************************/
+
+  // ***************** Secondary ***************** //
+  // TODO Decide which alt button
+  &--secondary {
+    --btn-color: var(--text-color);
+    --btn-bg: var(--bg-color);
+
+    &:hover {
+      --btn-bg: var(--text-color);
+      --btn-border-color: var(--text-color);
+      --btn-color: var(--bg-color);
+    }
+  }
+
+  // TODO Decide which alt button
+  // **** Ghost button - border and text color are the same
+  // &--secondary {
+  //   --btn-color: #{$btn-primary-bg};
+  //   --btn-bg: var(--bg-color);
+
+  //   &:hover {
+  //     --btn-bg: var(--text-color);
+  //     --btn-border-color: var(--text-color);
+  //     --btn-color: var(--bg-color);
+  //   }
+  // }
+
+  // ***************** Tertiary ***************** //
+  &--tertiary {
+    --btn-color: var(--text-color);
+    --btn-bg: var(--bg-color);
+    --btn-border-color: var(--bg-color);
+
+    // Ensure that a borderless button is more
+    // obvious as a clickable element
+    @if $btn-none-border-text-is-caps {
+      text-transform: uppercase;
+    }
+
+    @if $btn-tertiary-has-underline {
+      --line-height: 1px;
+      --line-width: 0%;
+
+      position: relative;
+
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background-color: var(--btn-color);
+        height: var(--line-height);
+        width: var(--line-width);
+        transition: width 200ms ease-in-out, height 200ms ease-in-out;
+      }
+
+      &:hover:not(:focus-visible) {
+        --line-width: 100%;
+      }
+
+      &:active:not(:focus-visible) {
+        --line-height: 2px;
+      }
+    } @else {
+    }
+
+    &:focus-visible:not(:hover) {
+      box-shadow: 0px 0px 10px var(--btn-bg);
+    }
+  }
+
   &--block {
     --btn-max-width: 100%;
   }
 }
 
-// .super-button {
-//   --border-color: var(--bg-primary);
-//   background-color: var(--bg-primary);
-//   color: var(--text-color);
-//   cursor: pointer;
-//   min-width: 125px;
-//   padding: $space-md;
-//   min-height: 55px;
-//   font-size: 20px;
-//   line-height: calc(20px * 1.5);
-//   border: 4px solid var(--border-color);
-//   border-radius: 9999px;
-//   transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out,
-//     border-color 200ms ease-in-out, transform 200ms ease-in-out;
-//   box-shadow: -5px -5px 10px rgb(235, 237, 243, 0.6),
-//     5px 5px 10px rgb(0, 0, 0, 0.25);
+//
+.super-button {
+  --border-color: var(--bg-color);
 
-//   &:hover {
-//     --border-color: rgb(235, 237, 243, 0.6);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  min-width: 125px;
+  padding: $space-md;
+  min-height: 55px;
+  font-size: 20px;
+  line-height: calc(20px * 1.5);
+  border: 4px solid var(--border-color);
+  border-radius: 9999px;
+  transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out,
+    border-color 200ms ease-in-out, transform 200ms ease-in-out;
+  // box-shadow: -5px -5px 10px rgb(235, 237, 243, 0.6),
+  //   5px 5px 10px rgb(0, 0, 0, 0.25);
+  border-radius: 50px;
+  background: #dedede;
+  box-shadow: inset 20px 20px 26px #c8c8c8, inset -20px -20px 26px #f4f4f4;
 
-//     box-shadow: -8px -8px 10px rgb(235, 237, 243, 0.6),
-//       8px 8px 10px rgb(0, 0, 0, 0.25);
+  &:hover {
+    // --border-color: rgb(235, 237, 243, 0.6);
 
-//     transform: scale(1.02);
-//   }
+    // box-shadow: -8px -8px 10px rgb(235, 237, 243, 0.6),
+    //   8px 8px 10px rgb(0, 0, 0, 0.25);
 
-//   &:active {
-//     color: $fire-opal;
-//     box-shadow: -1px -1px 10px rgb(235, 237, 243, 0.6),
-//       1px 1px 10px rgb(0, 0, 0, 0.25),
-//       inset -2px -2px 10px rgb(235, 237, 243, 0.6),
-//       inset 2px 2px 10px rgb(0, 0, 0, 0.25);
-//   }
-// }
+    // transform: scale(1.02);
+    border-radius: 50px;
+    background: linear-gradient(145deg, #eeeeee, #c8c8c8);
+    box-shadow: 20px 20px 31px #b4b4b4, -20px -20px 31px #ffffff;
+  }
+
+  &:active {
+    box-shadow: -1px -1px 10px rgb(235, 237, 243, 0.6),
+      1px 1px 10px rgb(0, 0, 0, 0.25),
+      inset -2px -2px 10px rgb(235, 237, 243, 0.6),
+      inset 2px 2px 10px rgb(0, 0, 0, 0.25);
+  }
+}

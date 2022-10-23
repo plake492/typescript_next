@@ -179,8 +179,11 @@ const Cards: React.FC = (): JSX.Element => {
           </div>
         </div>
       </div>
-      <section className="py-xxl container">
-        <button className="super-button">Super Button</button>
+      <section className="py-xxl bg-white">
+        <div className="container d-flex justify-content-around">
+          <button className="super-button">Super Button</button>
+          <button className="super-button--2">Super Btn Two</button>
+        </div>
       </section>
     </div>
   )
