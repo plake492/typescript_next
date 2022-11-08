@@ -6,7 +6,7 @@ import { Footer } from '../components/Footer'
 
 const MyApp = ({ Component, pageProps, router }): JSX.Element => {
   return (
-    <>
+    <main className="overflow-x-hidden">
       <Nav />
       <SwitchTransition mode="out-in">
         <CSSTransition
@@ -18,7 +18,7 @@ const MyApp = ({ Component, pageProps, router }): JSX.Element => {
         </CSSTransition>
       </SwitchTransition>
       <Footer />
-    </>
+    </main>
   )
 }
 

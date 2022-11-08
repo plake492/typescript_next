@@ -26,7 +26,7 @@ export const Nav: React.FC = (): JSX.Element => {
     { path: '/Colors', title: 'Colors' },
     { path: '/ColorsTheme', title: 'ColorsTheme' },
     { path: '/Images', title: 'Images' },
-    { path: '/Inputs', title: 'Inputs' },
+    { path: '/Forms', title: 'Forms' },
     { path: '/Calendar', title: 'Calendar' }
   ]
 

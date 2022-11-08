@@ -32,7 +32,7 @@ input {
 //   --padding-y: #{calc($space-sm * 1.444)};
 
 //   position: relative;
-//   margin-top: $space-md;
+//   margin: $space-md 0;
 //   display: var(--display);
 
 //   &__full-width {
@@ -113,3 +113,67 @@ input {
 //     opacity: 0.35;
 //   }
 // }
+
+.input {
+  --input-color: #{get-contrasted-text($input-bg)};
+  --input-bg: #{$input-bg};
+  --input-icon-color: var(--input-color);
+  --input-border-color: #{$input-bg};
+  --input-border-width: 1px;
+  --input-font-size: #{$input-font-size};
+  --input-padding-buffer: 1px;
+  --input-padding-x: #{calc($space-md + var(--input-padding-buffer))};
+  --input-padding-y: #{calc(($space-sm + var(--input-padding-buffer)) * 1.6)};
+  --input-max-width: 78rem;
+  --input-border-radius: #{if(
+      $btn-is-pill,
+      $input-border-radius-pill,
+      $input-border-radius
+    )};
+  --input-shadow-spread: 0;
+  --input-icon-size: calc(var(--input-font-size) * 1.5);
+  --input-icon-gap: #{$space-md};
+
+  --label-font-size: 1.6rem;
+
+  &__main {
+    display: block;
+    border: 1px solid var(--input-border-color);
+    padding: var(--input-padding-y) var(--input-padding-x);
+    border-radius: var(--input-border-radius);
+    background-color: var(--input-bg);
+    max-width: var(--input-max-width);
+    width: 100%;
+    position: relative;
+    box-shadow: inset -4px -5px 12px var(--input-shadow-spread)
+        transparentize(darken($input-bg, 12.5%), 0.4),
+      inset 6px 6px 10px var(--input-shadow-spread)
+        transparentize(darken($input-bg, 12.5%), 0.4);
+    flex: 1;
+
+    .icon {
+      color: var(--input-icon-color);
+      width: var(--input-icon-size);
+      height: var(--input-icon-size);
+    }
+
+    &:focus-within {
+      box-shadow: 1px 1px 10px #cdcdcd;
+      --input-border-color: #{darken($input-bg, 15%)};
+    }
+  }
+
+  &__field {
+    width: 100%;
+    font-size: var(--input-font-size);
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+  }
+
+  label {
+    font-size: var(--label-font-size);
+  }
+}

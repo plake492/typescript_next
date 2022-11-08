@@ -452,7 +452,7 @@ $above-everyhting: 999999;
 $text-alignment: (start, end, center, right, left);
 
 // **************************************************
-// **************** Buttoms *************************
+// **************** Buttons *************************
 // **************************************************
 
 $btn-primary-bg: #3568f6;
@@ -461,7 +461,17 @@ $btn-primary-bg: #1fd2fa;
 // $btn-primary-bg: #e96f0c;
 $btn-border-radius: 4px;
 $btn-border-radius-pill: 50px;
-$btn-font-size: 2rem;
+$btn-font-size: 1.8rem;
+
+// **************************************************
+// **************** Inputs **************************
+// **************************************************
+
+$input-font-size: 1.8rem;
+$input-bg: #dbebef;
+
+$input-border-radius-pill: 50px;
+$input-border-radius: 4px;
 
 // **************************************************
 // ***************** Misc ***************************

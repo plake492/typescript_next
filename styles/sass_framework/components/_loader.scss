@@ -1,0 +1,38 @@
+$num-of-lines: 16;
+$animation-length: 750ms;
+
+.line--wrapper {
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+
+.line {
+  width: 2px;
+  height: 7.5px;
+  background-color: var(--loader-color, --text-color);
+  position: absolute;
+  transform-origin: center -7.5px;
+  left: 50%;
+  top: 50%;
+  opacity: 0;
+}
+
+@for $i from 1 through $num-of-lines {
+  $offset: $i - 1;
+  $delay: ($offset * ($animation-length / $num-of-lines));
+
+  .line-#{$i} {
+    transform: translate(-50%, 7.5px) rotate($i * (360deg / $num-of-lines));
+    animation: show $animation-length linear $delay infinite normal forwards;
+  }
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

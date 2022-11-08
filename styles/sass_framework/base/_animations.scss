@@ -1,0 +1,44 @@
+.animate {
+  &--shake {
+    animation: shake 750ms cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.1s 1;
+  }
+
+  &--scale-up {
+    animation: scale-up 750ms cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.1s 1;
+  }
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-3px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(3px, 0, 0);
+  }
+}
+
+@keyframes scale-up {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.033);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

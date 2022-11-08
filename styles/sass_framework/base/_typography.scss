@@ -185,7 +185,7 @@ ul {
 
 ol {
   list-style: decimal;
-  margin-left: $space-md;
+  margin-left: calc($space-md * 1.5);
   margin-bottom: var(--base-text-margin-bottom);
 
   li {

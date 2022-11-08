@@ -1,6 +1,6 @@
 import React, { useState, useEffect, MouseEvent } from 'react'
 import SvgSymbol from './SvgSymbol'
-import Image from 'next/image'
+import Loader from './Loader'
 import { conditionalClasses } from '../utils/helpers'
 
 interface ButtonTypes {
@@ -14,6 +14,9 @@ interface ButtonTypes {
   iconOnRight?: boolean
   removeActionState?: boolean
   clearActionState?: boolean
+  formSuccess?: boolean | undefined
+  formError?: boolean | undefined
+  formLoading?: boolean | undefined
 }
 
 export default function Button({
@@ -25,6 +28,9 @@ export default function Button({
   iconOnRight,
   removeActionState,
   clearActionState,
+  formSuccess,
+  formError,
+  formLoading,
   type = 'button'
 }: ButtonTypes): JSX.Element {
   const [loading, setLoading] = useState(false)
@@ -32,6 +38,7 @@ export default function Button({
   const [error, setError] = useState(false)
   const [btnIcon, setBtnIcon] = useState(icon)
   const [textToShow, setTextToShow] = useState('')
+  const [feedback, setFeedback] = useState('')
 
   // Show and then clear success / error message on btn
   useEffect(() => {
@@ -45,6 +52,18 @@ export default function Button({
 
     return () => clearTimeout(id)
   }, [text, icon, clearActionState, success, error])
+
+  useEffect(() => {
+    if (formError !== undefined) {
+      setError(formError)
+    }
+    if (formSuccess !== undefined) {
+      setSuccess(formSuccess)
+    }
+    if (formLoading !== undefined) {
+      setLoading(formLoading)
+    }
+  }, [formError, formSuccess, formLoading])
 
   useEffect(() => {
     // Handle Icon
@@ -66,7 +85,30 @@ export default function Button({
     } else {
       setTextToShow(text)
     }
+
+    if (loading && (success || error)) {
+      setSuccess(false)
+      setError(false)
+    }
   }, [icon, success, error, loading, text])
+
+  // Effect for adding feedback animations on fetching states
+  useEffect(() => {
+    let id: ReturnType<typeof setTimeout>
+
+    if (error) {
+      setFeedback('shake')
+    }
+    if (success) {
+      setFeedback('scale-up')
+    }
+
+    id = setTimeout(() => {
+      setFeedback('')
+    }, 750)
+
+    return () => clearTimeout(id)
+  }, [error, success])
 
   const handleClick = async (
     event: MouseEvent<HTMLButtonElement>
@@ -98,6 +140,7 @@ export default function Button({
         [icon && !text, 'btn--icon-only'],
         [error, 'btn--error'],
         [success, 'btn--success'],
+        [feedback, `animate--${feedback}`],
         [
           !icon && text && !removeActionState && (loading || success || error),
           'btn--icon'
@@ -115,13 +158,7 @@ export default function Button({
     >
       {loading ? (
         <div className="icon">
-          <Image
-            src="/icons/loading.gif"
-            alt="loading animation"
-            layout="responsive"
-            height="100%"
-            width="100%"
-          />
+          <Loader />
         </div>
       ) : btnIcon ? (
         <SvgSymbol icon={btnIcon} viewBox="0 0 16 16" />

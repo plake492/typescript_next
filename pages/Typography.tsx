@@ -361,6 +361,21 @@ const Typography: React.FC = (): JSX.Element => {
                   <p>ipsum</p>
                 </li>
               </ul>
+              <ol>
+                <li>
+                  <p>lorem</p>
+                </li>
+                <li>
+                  <a>Link</a>
+                </li>
+                <li>
+                  <ul>
+                    <li>
+                      <a className="link">Link</a>
+                    </li>
+                  </ul>
+                </li>
+              </ol>
             </div>
             <div className="w-50">
               <ol>
